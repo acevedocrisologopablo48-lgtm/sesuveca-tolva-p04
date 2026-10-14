@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Tolva basculante P04 de SESUVECA. Explore su funcionamiento, vistas 3D, cálculos de ingeniería y lista de piezas.">
+  <meta name="theme-color" content="#102e46">
+  <title>Tolva P04 · SESUVECA</title>
+  <link rel="icon" href="assets/sesuveca-logo.png" id="favicon">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.js"}}</script>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="#simulacion" aria-label="SESUVECA, inicio"><img src="assets/sesuveca-logo.png" id="brand-logo" alt="SESUVECA"></a>
+    <div class="project-heading"><span class="eyebrow">INGENIERÍA · PROYECTO P04</span><h1>Tolva basculante <span>/</span> tipo trompo</h1></div>
+    <nav class="main-nav" aria-label="Secciones del proyecto">
+      <a href="#simulacion" class="nav-link active" data-tab="simulacion"><span class="nav-icon">◈</span> Simulación</a>
+      <a href="#calculos" class="nav-link" data-tab="calculos"><span class="nav-icon">∑</span> Cálculos</a>
+      <a href="#piezas" class="nav-link" data-tab="piezas"><span class="nav-icon">▦</span> Piezas</a>
+    </nav>
+    <span class="revision-badge">REV. P04</span>
+  </header>
+
+  <main>
+    <section id="simulacion" class="tab-panel">
+      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>El proyecto, en movimiento.</h2></div><span class="quiet-tag"><i></i> Modelo P04 · Javier Acevedo</span></div>
+      <div class="workspace">
+        <div class="viewer-column">
+          <div class="toolbar">
+            <div class="view-buttons" role="group" aria-label="Vistas del modelo">
+              <button class="active" data-view="iso" aria-pressed="true">Isométrica</button><button data-view="front" aria-pressed="false">Frontal</button><button data-view="side" aria-pressed="false">Lateral</button><button data-view="back" aria-pressed="false">Posterior</button><button data-view="top" aria-pressed="false">Planta</button><select id="extra-view" aria-label="Vistas adicionales"><option value="">Más vistas</option><option value="other">Lateral opuesto</option><option value="bottom">Inferior</option></select>
+            </div>
+            <div class="tool-buttons" role="group" aria-label="Herramientas del visor">
+              <button id="dimensions" aria-pressed="false" title="Mostrar dimensiones generales">Cotas</button><button id="section" aria-pressed="false" title="Cortar el modelo por el plano X = 0">Sección</button><button id="edges" aria-pressed="false">Aristas</button><button id="fullscreen" title="Ampliar visor" aria-label="Ampliar visor">⛶</button>
+            </div>
+          </div>
+          <div class="viewport" id="viewport">
+            <div class="canvas-label"><span id="view-label">CONJUNTO / ISOMÉTRICA</span><span>mm · Z VERTICAL</span></div>
+            <div id="scene" role="img" aria-label="Modelo 3D interactivo de la tolva P04. Arrastra para girar, usa la rueda para acercar y selecciona una pieza para identificarla."></div>
+            <div class="loading" id="loading"><span class="loader"></span><strong>Preparando el conjunto 3D</strong><span>Geometría de la tolva P04</span></div>
+            <div class="viewport-hints"><span>Arrastrar: girar · Rueda: acercar · Clic: identificar</span><button id="fit" title="Centrar y encuadrar el modelo">↺ Encuadrar</button></div>
+            <div class="part-tooltip" id="part-tooltip" hidden><button id="clear-selection" aria-label="Cerrar selección">×</button><small id="selected-code"></small><strong id="selected-title"></strong><span id="selected-meta"></span></div>
+            <div class="orientation"><span class="axis-z">Z</span><span class="axis-y">Y</span><span class="axis-x">X</span></div>
+          </div>
+          <div class="viewer-stats"><div><span>BOCA DE CARGA</span><strong>3800 × 2800 <small>mm</small></strong></div><div><span>RECORRIDO</span><strong>0 — 70<small>°</small></strong></div><div><span>VOLUMEN ÚTIL</span><strong>8,446 <small>m³</small></strong></div><div><span>CASO RESISTENTE</span><strong>10 <small>t</small></strong></div></div>
+          <p class="viewer-note">Representación cinemática del conjunto. El carbón es aproximado; no representa un ensayo de impacto ni de flujo granular.</p>
+        </div>
+        <aside class="operation-panel" aria-label="Controles de simulación">
+          <div class="panel-heading"><span>FUNCIONAMIENTO</span><span class="status-dot" id="run-status">EN REPOSO</span></div>
+          <div class="operation-body">
+            <div class="operation-title"><span class="number-mark">01</span><div><h3>Basculamiento de la cuba</h3><p>Recepción, giro y descarga al piso.</p></div></div>
+            <div class="angle-readout"><div><span class="field-label">ÁNGULO DE GIRO</span><strong><span id="angle-value">0</span><small>°</small></strong></div><span class="position-tag" id="position-tag">Carga</span></div>
+            <label class="sr-only" for="angle">Ángulo de la tolva, de cero a setenta grados</label><input id="angle" type="range" min="0" max="70" step="0.1" value="0"><div class="range-labels"><span>0° · Carga</span><span>70° · Descarga</span></div>
+            <div class="pose-buttons"><button data-angle="0" class="active">0°</button><button data-angle="35">35°</button><button data-angle="70">70°</button></div>
+            <div class="play-controls"><button id="play" class="primary"><span>▶</span> Reproducir ciclo</button><button id="pause" title="Pausar ciclo" disabled aria-label="Pausar ciclo">Ⅱ</button><button id="reset" title="Reiniciar simulación" aria-label="Reiniciar simulación">↺</button></div>
+            <div class="playback-row"><span>Velocidad de reproducción</span><select id="playback" aria-label="Velocidad de reproducción"><option value="1">1× · tiempo real</option><option value="2">2×</option><option value="4" selected>4×</option></select></div>
+            <div class="cycle-progress"><div id="cycle-progress"></div></div><div class="cycle-phases"><span data-phase="0" class="current">Recibir</span><span data-phase="1">Girar</span><span data-phase="2">Descargar</span><span data-phase="3">Retornar</span></div>
+            <div class="machine-status"><span id="brake-status">● Freno aplicado</span><strong id="machine-speed">0,00 rpm</strong></div>
+          </div>
+          <div class="operation-body display-options"><div class="operation-title"><span class="number-mark">02</span><div><h3>Explorar el conjunto</h3></div></div>
+            <label class="switch-row"><span>Representación del carbón</span><input id="coal" type="checkbox" checked><span class="switch" aria-hidden="true"></span></label>
+            <label class="switch-row"><span>Ver transmisión sin guardas</span><input id="transmission" type="checkbox"><span class="switch" aria-hidden="true"></span></label>
+            <label for="explode" class="explode-label"><span>Separar piezas</span><strong id="explode-value">0 %</strong></label><input id="explode" type="range" min="0" max="100" value="0" step="1"><p class="micro-note">Despiece visual para identificar componentes.</p>
+          </div>
+          <div class="operation-foot"><span class="field-label">ACCIONAMIENTO ELÉCTRICO</span><strong>Planetario + freno por resortes</strong><p>380 V · 3 fases · 60 Hz<br>Límite de giro: 0,5 rpm</p><a href="#calculos" class="inline-link" data-jump-commercial>Ver componentes seleccionados <span>↗</span></a></div>
+        </aside>
+      </div>
+      <div class="capacity-strip"><span class="info-icon">i</span><p><strong>Capacidad volumétrica: 6,08–7,43 t</strong> para carbón de 720–880 kg/m³. Las 10 t corresponden al caso de cálculo resistente.</p><a href="#calculos">Ver cálculos →</a></div>
+    </section>
+
+    <section id="calculos" class="tab-panel" hidden>
+      <div class="section-intro"><div><span class="section-kicker">MEMORIA DE INGENIERÍA</span><h2>Cálculos del proyecto.</h2></div><span class="quiet-tag">P04 · datos de la entrega final</span></div>
+      <div class="metric-grid" id="calculation-metrics"></div>
+      <div class="content-card">
+        <div class="card-tabs" role="tablist" aria-label="Información técnica"><button class="active" data-calc-tab="results" role="tab" aria-selected="true">Resultados <span>207</span></button><button data-calc-tab="checks" role="tab" aria-selected="false">Comprobaciones <span>92</span></button><button data-calc-tab="commercial" role="tab" aria-selected="false">Componentes comerciales</button></div>
+        <div class="table-controls" id="calc-controls"><label class="search"><span>⌕</span><input id="calc-search" placeholder="Buscar cálculo o comprobación…" aria-label="Buscar cálculo o comprobación"></label><select id="calc-category" aria-label="Filtrar por tema"><option value="">Todos los temas</option></select><span class="result-count" id="calc-count"></span></div>
+        <div id="calc-content"></div>
+      </div>
+      <div class="technical-note"><span class="info-icon">i</span><p>Cálculos analíticos bajo las hipótesis de la memoria P04. La energía de caída calculada es <strong>175,1 J</strong>; la respuesta de los amortiguadores requiere el ensayo definido en el protocolo. Las pruebas físicas y confirmaciones del fabricante no se dan por realizadas.</p></div>
+    </section>
+
+    <section id="piezas" class="tab-panel" hidden>
+      <div class="section-intro"><div><span class="section-kicker">LISTA DE MATERIALES</span><h2>Cada pieza, en su lugar.</h2></div><button id="download-parts" class="outline-button">↓ Exportar lista CSV</button></div>
+      <div class="parts-summary"><div><strong>749</strong><span>piezas en el conjunto</span></div><div><strong>371</strong><span>códigos de pieza</span></div><div><strong>11 092 <small>kg</small></strong><span>masa total del equipo</span></div><p>Cantidades y masas vinculadas al modelo P04.<br>Selecciona una pieza para localizarla en el visor.</p></div>
+      <div class="content-card"><div class="table-controls"><label class="search"><span>⌕</span><input id="parts-search" placeholder="Buscar pieza, código o material…" aria-label="Buscar pieza, código o material"></label><select id="parts-category" aria-label="Filtrar piezas por conjunto"><option value="">Todos los conjuntos</option></select><label class="compact-check"><input id="group-parts" type="checkbox" checked> Agrupar similares</label><span class="result-count" id="parts-count"></span></div><div class="table-scroll"><table class="parts-table"><thead><tr><th>Código</th><th>Pieza / componente</th><th>Conjunto</th><th class="numeric">Cant.</th><th class="numeric">Masa total · kg</th><th></th></tr></thead><tbody id="parts-body"></tbody></table></div><div id="parts-empty" class="empty" hidden>No hay piezas que coincidan con la búsqueda.</div></div>
+    </section>
+  </main>
+  <footer><span>SESUVECA <span class="footer-divider">/</span> Tolva basculante P04</span><span>Elaboración: <strong>JAVIER ACEVEDO</strong></span></footer>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

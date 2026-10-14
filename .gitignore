@@ -1,0 +1,7 @@
+tmp/
+.openai/
+web_tolva/
+mesh_qa.json
+qa/
+*.zip
+scripts/
