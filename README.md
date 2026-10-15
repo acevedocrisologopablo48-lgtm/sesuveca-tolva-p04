@@ -2,6 +2,8 @@
 
 Web estática del proyecto de Javier Acevedo. Incluye visor 3D de la geometría P04, movimiento 0–70°, vistas ortogonales, sección, cotas, despiece visual, selección de piezas, cálculos y lista de materiales. La cotización y los planos no forman parte de esta publicación.
 
+El visor distingue pintura satinada, acero mecanizado, placas interiores y elastómero. Incluye reflejos de estudio, sombras de contacto, superficies cilíndricas suaves y aristas de piezas activadas inicialmente. Los acabados son una representación visual; los materiales de ingeniería se consultan en la lista de piezas. Las aristas se agrupan en dos conjuntos para mantener fluida la maniobra.
+
 ## Abrir localmente
 
 Servir la carpeta `dist` con cualquier servidor HTTP estático. Por ejemplo:
