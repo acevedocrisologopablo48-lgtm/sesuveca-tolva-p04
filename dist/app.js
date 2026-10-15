@@ -108,7 +108,7 @@ async function init3D(){
   renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
   renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const rect=renderer.domElement.getBoundingClientRect();raycaster.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hits=raycaster.intersectObjects(meshes.filter(m=>m.visible));const hit=hits.find(h=>!state.section||h.point.x>=0);if(hit)selectParts([hit.object.userData.part]);else clearSelection();});
   new ResizeObserver(resize).observe($('#viewport'));document.addEventListener('fullscreenchange',resize);
-  view('iso');resize();updatePose();$('#loading').hidden=true;requestAnimationFrame(animate);
+  view('iso');resize();updatePose();$('#scene').dataset.rendererVersion='materiales-20261015';$('#loading').hidden=true;requestAnimationFrame(animate);
   window.p04={state,data,meshes,scene,camera,controls,setAngle,view,selectParts,meta,renderer};
 }
 
