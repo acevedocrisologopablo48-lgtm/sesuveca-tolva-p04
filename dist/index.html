@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Tolva basculante C05 de SESUVECA. Modelo 3D, cálculos, piezas y documentos.">
+  <meta name="description" content="Tolva trompo de SESUVECA. Modelo 3D, cálculos, piezas y documentos.">
   <meta name="theme-color" content="#102e46">
-  <title>Tolva C05 · SESUVECA</title>
+  <title>TOLVA TROMPO · SESUVECA</title>
   <link rel="icon" href="assets/sesuveca-logo.png" id="favicon">
   <link rel="stylesheet" href="styles.css">
   <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.js"}}</script>
@@ -12,18 +12,18 @@
 <body>
   <header class="header">
     <a class="brand" href="#simulacion" aria-label="SESUVECA, inicio"><img src="assets/sesuveca-logo.png" id="brand-logo" alt="SESUVECA"></a>
-    <div class="project-heading"><span class="eyebrow">INGENIERÍA · PROYECTO TT10</span><h1>Tolva basculante <span>/</span> tipo trompo</h1></div>
+    <div class="project-heading"><span class="eyebrow">INGENIERÍA · PROYECTO TT10</span><h1>TOLVA TROMPO</h1></div>
     <nav class="main-nav" aria-label="Secciones del proyecto">
       <a href="#simulacion" class="nav-link active" data-tab="simulacion"><span class="nav-icon">◈</span> Simulación</a>
       <a href="#calculos" class="nav-link" data-tab="calculos"><span class="nav-icon">∑</span> Cálculos</a>
       <a href="#piezas" class="nav-link" data-tab="piezas"><span class="nav-icon">▦</span> Piezas</a>
     <a href="#documentos" class="nav-link" data-tab="documentos">Documentos</a></nav>
-    <span class="revision-badge">REV. C05</span>
+
   </header>
 
   <main>
     <section id="simulacion" class="tab-panel">
-      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>Conjunto 3D</h2></div><span class="quiet-tag"><i></i> Modelo C05 · Proyecto TT10</span></div>
+      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>Conjunto 3D</h2></div><span class="quiet-tag"><i></i> Modelo 3D · Proyecto TT10</span></div>
       <div class="workspace">
         <div class="viewer-column">
           <div class="toolbar">
@@ -36,8 +36,8 @@
           </div>
           <div class="viewport" id="viewport">
             <div class="canvas-label"><span id="view-label">CONJUNTO / ISOMÉTRICA</span><span>mm · Z VERTICAL</span></div>
-            <div id="scene" role="img" aria-label="Modelo 3D interactivo de la tolva C05. Arrastra para girar, usa la rueda para acercar y selecciona una pieza para identificarla."></div>
-            <div class="loading" id="loading"><span class="loader"></span><strong>Preparando el conjunto 3D</strong><span>Geometría de la tolva C05</span></div>
+            <div id="scene" role="img" aria-label="Modelo 3D interactivo de la tolva TT10. Arrastra para girar, usa la rueda para acercar y selecciona una pieza para identificarla."></div>
+            <div class="loading" id="loading"><span class="loader"></span><strong>Preparando el conjunto 3D</strong><span>Geometría de la tolva</span></div>
             <div class="viewport-hints"><span>Arrastrar: girar · Rueda: acercar · Clic: identificar</span><button id="fit" title="Centrar y encuadrar el modelo">↺ Encuadrar</button></div>
             <div class="part-tooltip" id="part-tooltip" hidden><button id="clear-selection" aria-label="Cerrar selección">×</button><small id="selected-code"></small><strong id="selected-title"></strong><span id="selected-meta"></span></div>
             <div class="orientation"><span class="axis-z">Z</span><span class="axis-y">Y</span><span class="axis-x">X</span></div>
@@ -64,28 +64,28 @@
           <div class="operation-foot"><span class="field-label">ACCIONAMIENTO ELÉCTRICO</span><strong>Motorreductor y frenos de salida</strong><p>380 V · 3 fases · 60 Hz<br>70° en 60 s</p><a href="#calculos" class="inline-link" data-jump-commercial>Ver componentes <span>↗</span></a></div>
         </aside>
       </div>
-      <div class="capacity-strip"><span class="info-icon">i</span><p><strong>Tolva trompo C05 · 10 t.</strong> Planos y lista de materiales en Documentos.</p><a href="#documentos">Descargas →</a></div>
+      <div class="capacity-strip"><span class="info-icon">i</span><p><strong>Tolva trompo · 10 t.</strong> Planos y lista de materiales en Documentos.</p><a href="#documentos">Descargas →</a></div>
     </section>
 
     <section id="calculos" class="tab-panel" hidden>
-      <div class="section-intro"><div><span class="section-kicker">MEMORIA DE INGENIERÍA</span><h2>Cálculos</h2></div><span class="quiet-tag">Revisión C05</span></div>
+      <div class="section-intro"><div><span class="section-kicker">MEMORIA DE INGENIERÍA</span><h2>Cálculos</h2></div><span class="quiet-tag">TT10</span></div>
       <div class="metric-grid" id="calculation-metrics"></div>
       <div class="content-card">
         <div class="card-tabs" role="tablist" aria-label="Información técnica"><button class="active" data-calc-tab="results" role="tab" aria-selected="true">Resultados <span>21</span></button><button data-calc-tab="checks" role="tab" aria-selected="false">Comprobaciones <span>7</span></button><button data-calc-tab="commercial" role="tab" aria-selected="false">Componentes comerciales</button></div>
         <div class="table-controls" id="calc-controls"><label class="search"><span>⌕</span><input id="calc-search" placeholder="Buscar cálculo o comprobación…" aria-label="Buscar cálculo o comprobación"></label><select id="calc-category" aria-label="Filtrar por tema"><option value="">Todos los temas</option></select><span class="result-count" id="calc-count"></span></div>
         <div id="calc-content"></div>
       </div>
-      <div class="technical-note"><span class="info-icon">i</span><p><a href="registro-revision.html">Registro de revisión técnica →</a></p></div>
+      <div class="technical-note"><span class="info-icon">i</span><p><a href="registro-revision.html">Datos del proyecto →</a></p></div>
     </section>
 
     <section id="piezas" class="tab-panel" hidden>
       <div class="section-intro"><div><span class="section-kicker">LISTA DE MATERIALES</span><h2>Piezas y materiales</h2></div><button id="download-parts" class="outline-button">↓ Exportar lista CSV</button></div>
-      <div class="parts-summary"><div><strong>943</strong><span>instancias en el visor C05</span></div><div><strong>468</strong><span>códigos del visor C05</span></div><div><strong>17 819 <small>kg</small></strong><span>suma de masas definidas</span></div><p>Datos del modelo C05. Masa sin dato: n/d. Clic en una pieza para verla en el modelo.</p></div>
+      <div class="parts-summary"><div><strong>943</strong><span>instancias en el visor</span></div><div><strong>468</strong><span>códigos del visor</span></div><div><strong>17 819 <small>kg</small></strong><span>suma de masas definidas</span></div><p>Datos del modelo. Masa sin dato: n/d. Clic en una pieza para verla en el modelo.</p></div>
       <div class="content-card"><div class="table-controls"><label class="search"><span>⌕</span><input id="parts-search" placeholder="Buscar pieza, código o material…" aria-label="Buscar pieza, código o material"></label><select id="parts-category" aria-label="Filtrar piezas por conjunto"><option value="">Todos los conjuntos</option></select><label class="compact-check"><input id="group-parts" type="checkbox" checked> Agrupar similares</label><span class="result-count" id="parts-count"></span></div><div class="table-scroll"><table class="parts-table"><thead><tr><th>Código</th><th>Pieza / componente</th><th>Conjunto</th><th class="numeric">Cant.</th><th class="numeric">Masa total · kg</th><th></th></tr></thead><tbody id="parts-body"></tbody></table></div><div id="parts-empty" class="empty" hidden>No hay piezas que coincidan con la búsqueda.</div></div>
     </section>
-  <section id="documentos" class="tab-panel" hidden><div class="section-intro"><div><span class="section-kicker">C05-PC · 16/10/2026</span><h2>Documentos</h2></div><a class="outline-button" href="p04.html">Revisión P04</a></div><div class="commercial-grid"><article class="commercial-card"><h3>Planos por conjuntos</h3><p>26 conjuntos · 46 láminas A3</p><a href="documentos/TT10_C05_PLANOS_CONJUNTOS.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Lista de materiales</h3><p>500 códigos · 1004 piezas</p><a href="documentos/TT10_C05_BOM_PLANOS_CONJUNTOS.xlsx" download>Descargar ↗</a></article><article class="commercial-card"><h3>Informe de cálculo</h3><p>Transmisión, pasadores y bastidor</p><a href="documentos/TT10_C05_INFORME_CORRECCION.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Perfiles de corte</h3><p>135 DXF · mm · escala 1:1</p><a href="documentos/TT10_C05_DXF_CORTE.zip" download>Descargar ↗</a></article></div></section></main>
-  <footer><span>SESUVECA <span class="footer-divider">/</span> Tolva basculante C05</span><span>Elaboración: <strong>JAVIER ACEVEDO</strong></span></footer>
+  <section id="documentos" class="tab-panel" hidden><div class="section-intro"><div><span class="section-kicker">16/10/2026</span><h2>Documentos</h2></div></div><div class="commercial-grid"><article class="commercial-card"><h3>Planos por conjuntos</h3><p>26 conjuntos · 46 láminas A3</p><a href="documentos/TT10_PLANOS_CONJUNTOS.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Lista de materiales</h3><p>500 códigos · 1004 piezas</p><a href="documentos/TT10_LISTA_MATERIALES.xlsx" download>Descargar ↗</a></article><article class="commercial-card"><h3>Informe de cálculo</h3><p>Transmisión, pasadores y bastidor</p><a href="documentos/TT10_INFORME_CALCULO.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Perfiles de corte</h3><p>135 DXF · mm · escala 1:1</p><a href="documentos/TT10_DXF_CORTE.zip" download>Descargar ↗</a></article></div></section></main>
+  <footer><span>SESUVECA / TOLVA TROMPO</span></footer>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script type="module" src="app-c05.js?v=20261016-PC"></script>
+  <script type="module" src="app-c05.js?v=20261016-TT10"></script>
 </body>
 </html>

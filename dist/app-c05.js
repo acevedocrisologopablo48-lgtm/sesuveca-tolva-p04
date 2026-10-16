@@ -127,7 +127,7 @@ function updateCycle(dt){
 }
 
 let coalSeeds=[],dummy=new THREE.Object3D();
-function makeCoal(){coalMesh=new THREE.Group();scene.add(coalMesh);state.coal=false;$('#coal').checked=false;$('#coal').disabled=true;$('#coal').closest('label').title='Carbón: sin modelo en el visor C05.';}
+function makeCoal(){coalMesh=new THREE.Group();scene.add(coalMesh);state.coal=false;$('#coal').checked=false;$('#coal').disabled=true;$('#coal').closest('label').title='Carbón: sin modelo en el visor.';}
 function updateCoal(){}
 function makeDimensions(){
   dimensionsGroup=new THREE.Group();scene.add(dimensionsGroup);dimensionsGroup.visible=false;
@@ -161,7 +161,7 @@ function selectParts(codes){
 function animate(now){requestAnimationFrame(animate);const dt=Math.min(.1,(now-lastFrame)/1000);lastFrame=now;if($('#simulacion').hidden)return;if(state.playing)updateCycle(dt);controls.update();renderer.render(scene,camera);if(state.dimensions)updateDimensionLabels();frameCount++;}
 
 function renderMetrics(){
-  const s=data.summary;const cards=[['VOLUMEN ÚTIL',nf(s.usefulVolumeM3,3),'m³','Volumen de referencia de la base C05.'],['CARGA MÁXIMA',nf(s.capacityRangeKg[0]/1000,2),'t','Límite de carga del proyecto: 10 t.'],['PAR DE SERVICIO',nf(s.operatingTorqueNm/1000,2),'kN·m','Máximo del estudio de frenado: '+nf(s.peakTransmittedTorqueNm/1000,2)+' kN·m.'],['MASA MÓVIL',nf(s.movingMassKg/1000,3),'t','Masa móvil registrada; equipos comerciales por acreditar.']];
+  const s=data.summary;const cards=[['VOLUMEN ÚTIL',nf(s.usefulVolumeM3,3),'m³','Volumen útil de la tolva.'],['CARGA MÁXIMA',nf(s.capacityRangeKg[0]/1000,2),'t','Límite de carga del proyecto: 10 t.'],['PAR DE SERVICIO',nf(s.operatingTorqueNm/1000,2),'kN·m','Máximo del estudio de frenado: '+nf(s.peakTransmittedTorqueNm/1000,2)+' kN·m.'],['MASA MÓVIL',nf(s.movingMassKg/1000,3),'t','Masa móvil registrada; equipos comerciales por acreditar.']];
   $('#calculation-metrics').innerHTML=cards.map(([title,v,unit,note])=>`<div class="metric-card"><span>${title}</span><strong>${v}<small>${unit}</small></strong><p>${note}</p></div>`).join('');
 }
 function calcOptions(){const rows=calcTab==='checks'?data.checks:data.calculations;const values=[...new Set(rows.map(r=>r.category))].sort();$('#calc-category').innerHTML='<option value="">Todos los temas</option>'+values.map(v=>`<option>${escape(v)}</option>`).join('');}
@@ -189,7 +189,7 @@ function renderParts(){
   $('#parts-body').innerHTML=rows.map(p=>`<tr><td class="code">${escape(p.code)}</td><td><span class="cell-title">${escape(p.title)}</span><span class="cell-subtitle">${escape(p.material||[...new Set(data.parts.filter(k=>p.codes.includes(k.code)).map(k=>k.material))].join(' / '))}</span></td><td><span class="cell-subtitle">${escape(p.category)}</span></td><td class="numeric">${p.quantity}</td><td class="numeric">${p.massKg==null?'n/d':nf(p.massKg,2)}</td><td><button class="part-locate" data-locate="${escape(p.code)}" data-grouped="${grouped}">Ver en 3D ↗</button></td></tr>`).join('');
   $$('#parts-body [data-locate]').forEach(b=>b.addEventListener('click',()=>{const row=(b.dataset.grouped==='true'?data.families:data.parts).find(p=>p.code===b.dataset.locate);location.hash='simulacion';requestAnimationFrame(()=>{if(!machine){toast('El visor está terminando de cargar');return;}reset();if(row.category==='Accionamiento'||row.category==='Transmisión'){state.transmission=true;$('#transmission').checked=true;updatePose();}selectParts(row.codes||[row.code]);view('iso');});}));
 }
-function downloadParts(){const header=['Codigo','Pieza','Conjunto','Material','Cantidad','Masa unitaria kg','Masa total kg'];const lines=[header,...data.parts.map(p=>[p.code,p.title,p.category,p.material,p.quantity,p.unitMassKg,p.massKg])].map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\r\n');const blob=new Blob(['\ufeff'+lines],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SESUVECA_Tolva_C05_piezas.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function downloadParts(){const header=['Codigo','Pieza','Conjunto','Material','Cantidad','Masa unitaria kg','Masa total kg'];const lines=[header,...data.parts.map(p=>[p.code,p.title,p.category,p.material,p.quantity,p.unitMassKg,p.massKg])].map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\r\n');const blob=new Blob(['\ufeff'+lines],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SESUVECA_TOLVA_TROMPO_PIEZAS.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 
 function wireEvents(){
   $$('[data-view]').forEach(b=>b.addEventListener('click',()=>view(b.dataset.view)));$('#extra-view').addEventListener('change',e=>e.target.value&&view(e.target.value));$$('[data-angle]').forEach(b=>b.addEventListener('click',()=>setAngle(b.dataset.angle)));
