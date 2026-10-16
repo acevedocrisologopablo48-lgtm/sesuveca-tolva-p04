@@ -127,7 +127,7 @@ function updateCycle(dt){
 }
 
 let coalSeeds=[],dummy=new THREE.Object3D();
-function makeCoal(){coalMesh=new THREE.Group();scene.add(coalMesh);state.coal=false;$('#coal').checked=false;$('#coal').disabled=true;$('#coal').closest('label').title='La revisión C05 muestra únicamente el CAD real. No incluye un modelo de flujo granular.';}
+function makeCoal(){coalMesh=new THREE.Group();scene.add(coalMesh);state.coal=false;$('#coal').checked=false;$('#coal').disabled=true;$('#coal').closest('label').title='Carbón: sin modelo en el visor C05.';}
 function updateCoal(){}
 function makeDimensions(){
   dimensionsGroup=new THREE.Group();scene.add(dimensionsGroup);dimensionsGroup.visible=false;
@@ -205,7 +205,7 @@ function wireEvents(){
 }
 
 async function start(){
-  try{const r=await fetch('data/project-c05.json');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderMetrics();calcOptions();renderCalc();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
+  try{const r=await fetch('data/project-c05.json?v=20261016-PC');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderMetrics();calcOptions();renderCalc();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
   catch(error){console.error(error);$('#loading').innerHTML='<strong>No se pudo iniciar el visor 3D.</strong><span>Comprueba que WebGL esté habilitado y recarga la página.</span><button onclick="location.reload()">Reintentar</button>';toast('Los datos del proyecto permanecen disponibles en sus pestañas.');}
 }
 start();

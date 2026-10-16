@@ -1,9 +1,9 @@
-# SESUVECA · Tolva Trompo C05
+# SESUVECA · Tolva trompo TT10
 
-CAD de SolidWorks: 468 códigos y 943 posiciones de pieza. Cinco configuraciones geométricas aprobadas por el cliente el 15 de octubre de 2026.
+Web: https://acevedocrisologopablo48-lgtm.github.io/sesuveca-tolva-p04/
 
-El visor C05 utiliza teselación del STEP del conjunto aprobado. Movimiento de 0–70° con perfil suave de 60 s por trayecto; animación cinemática. La geometría y los cálculos de P04 se conservan en `p04.html`.
+Documentos C05-PC: 26 conjuntos, 46 láminas A3; BOM de 500 códigos y 1004 piezas; informe de cálculo y 135 perfiles DXF.
 
-El despiece A3, la BOM y las memorias se descargan en Documentos. La aprobación geométrica no constituye liberación técnica para fabricación. Los equipos nominales y comprobaciones no aceptadas permanecen identificados.
+El visor C05 contiene 468 códigos y 943 instancias. Revisión P04 en `p04.html`.
 
-Servir `dist/` mediante HTTP. GitHub Actions publica únicamente esa carpeta.
+Servir `dist/` por HTTP. GitHub Actions publica esa carpeta al actualizar `main`.
