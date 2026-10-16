@@ -4,4 +4,5 @@ web_tolva/
 mesh_qa.json
 qa/
 *.zip
+!dist/documentos/*.zip
 scripts/
