@@ -38,9 +38,9 @@ function surfaceMaps(){
 }
 function materialFor(p,maps){
   const id=p.id;let roughness=.5,metalness=0,bumpScale=.00004,map=maps.paint;
-  if(/^P10/.test(id)){roughness=.98;metalness=0;bumpScale=.00025;}
-  else if(/^P11/.test(id)){roughness=.7;metalness=.95;bumpScale=.00012;map=maps.steel;}
-  else if(/^J05|^M0[1-4]|^K0[1-7]|^J06|^J07|^P1[23468]/.test(id)||p.commercial&&!/^M0[5-9]|^M10/.test(id)){roughness=.31;metalness=.95;bumpScale=.000025;map=maps.steel;}
+  if(/ELAST|CAUCHO/.test(id)||/^P10/.test(id)||/elast[oó]mero|caucho/i.test(p.material)){roughness=.98;metalness=0;bumpScale=.00025;}
+  else if(/Hardox|antidesgaste/i.test(p.material)||/^P11/.test(id)){roughness=.7;metalness=.95;bumpScale=.00012;map=maps.steel;}
+  else if(/MU[ÑN]ON|EJE|CHAVETA|PASADOR|PE_PIN|BUJE|M076|ENGRANAJE/.test(id)||/^J05|^M0[1-4]|^K0[1-7]|^J06|^J07|^P1[23468]/.test(id)||p.commercial&&!/^M0[5-9]|^M10/.test(id)){roughness=.31;metalness=.95;bumpScale=.000025;map=maps.steel;}
   const mat=new THREE.MeshStandardMaterial({name:p.material,color:colorFor(p),roughness,metalness,roughnessMap:map,bumpMap:map,bumpScale,flatShading:false,side:THREE.DoubleSide,envMapIntensity:metalness>.5?1.05:.55,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
   return mat;
 }
@@ -52,7 +52,7 @@ function prepareGeometry(geometry){
 }
 
 async function init3D(){
-  const [meta,binary]=await Promise.all([fetch('assets/machine-c05.json').then(r=>r.json()),fetch('assets/machine-c05.bin').then(r=>r.arrayBuffer())]);
+  const [meta,binary]=await Promise.all([fetch('assets/machine-c05.json?v=20261024').then(r=>r.json()),fetch('assets/machine-c05.bin?v=20261024').then(r=>r.arrayBuffer())]);
   scene=new THREE.Scene();scene.background=new THREE.Color('#dce4eb');
   renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.domElement.style.width='100%';renderer.domElement.style.height='100%';renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.06;renderer.localClippingEnabled=true;
@@ -95,7 +95,7 @@ async function init3D(){
   renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
   renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const rect=renderer.domElement.getBoundingClientRect();raycaster.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hits=raycaster.intersectObjects(meshes.filter(m=>m.visible));const hit=hits.find(h=>!state.section||h.point.x>=0);if(hit)selectParts([hit.object.userData.part]);else clearSelection();});
   new ResizeObserver(resize).observe($('#viewport'));document.addEventListener('fullscreenchange',resize);
-  view('iso');resize();updatePose();$('#scene').dataset.rendererVersion='materiales-20261015';$('#loading').hidden=true;requestAnimationFrame(animate);
+  view('iso');resize();updatePose();$('#scene').dataset.rendererVersion='TT10-nativo-20261024';$('#loading').hidden=true;requestAnimationFrame(animate);
   window.p04={state,data,meshes,scene,camera,controls,setAngle,view,selectParts,meta,renderer};
 }
 
@@ -111,7 +111,7 @@ function setAngle(angle,manual=true){
   $$('[data-angle]').forEach(b=>b.classList.toggle('active',Math.abs(Number(b.dataset.angle)-state.angle)<.1));
   updatePose();
 }
-function updatePose(){if(!moving)return;moving.rotation.y=THREE.MathUtils.degToRad(state.angle);const t=state.time,S=u=>{u=Math.max(0,Math.min(1,u));return 10*u**3-15*u**4+6*u**5;};let stroke=state.angle>.1?1:0;if(state.started)stroke=t<3?0:t<16?S((t-3)/13):t<143?1:1-S((t-143)/13);for(const m of meshes){m.position.copy(m.userData.base).addScaledVector(m.userData.explode,state.explosion);m.position.y+=(m.userData.pin||0)*.210*stroke;if(m.userData.pawl&&stroke>.01)m.position.z-=.025;m.visible=!(state.transmission&&m.userData.guard);}updateCoal();refreshEdges();renderer.shadowMap.needsUpdate=true;}
+function updatePose(){if(!moving)return;moving.rotation.y=THREE.MathUtils.degToRad(state.angle);const t=state.time,S=u=>{u=Math.max(0,Math.min(1,u));return 10*u**3-15*u**4+6*u**5;};let stroke=state.angle>.1?1:0;if(state.started)stroke=t<5?0:t<16?S((t-5)/11):t<143?1:1-S((t-143)/13);const latch=state.started?(t<3?0:t<5?S((t-3)/2):t<156?1:1-S((t-156)/3)):(state.angle>.1?1:0);for(const m of meshes){m.position.copy(m.userData.base).addScaledVector(m.userData.explode,state.explosion);m.position.y+=(m.userData.pin||0)*.210*stroke;if(m.userData.pawl)m.position.z-=.025*latch;m.visible=!(state.transmission&&m.userData.guard);}updateCoal();refreshEdges();renderer.shadowMap.needsUpdate=true;}
 function pause(){state.playing=false;$('#play').disabled=false;$('#pause').disabled=true;$('#play').innerHTML='<span>▶</span> '+(state.started&&state.time<cycleDuration?'Continuar ciclo':'Reproducir ciclo');$('#run-status').textContent='EN REPOSO';$('#run-status').classList.remove('running');$('#brake-status').textContent='● Freno aplicado';$('#machine-speed').textContent='0,00 rpm';}
 function play(){if(!state.started||state.time>=cycleDuration){state.time=0;state.started=true;clearSelection();$('#explode').value=0;state.explosion=0;$('#explode-value').textContent='0 %';}state.playing=true;$('#play').disabled=true;$('#pause').disabled=false;$('#run-status').textContent='CICLO EN CURSO';$('#run-status').classList.add('running');}
 function reset(){pause();state.time=0;state.started=false;state.phase=0;setAngle(0,false);$('#cycle-progress').style.width='0%';$$('[data-phase]').forEach(el=>el.classList.toggle('current',el.dataset.phase==='0'));$('#play').innerHTML='<span>▶</span> Reproducir ciclo';}
@@ -127,8 +127,36 @@ function updateCycle(dt){
 }
 
 let coalSeeds=[],dummy=new THREE.Object3D();
-function makeCoal(){coalMesh=new THREE.Group();scene.add(coalMesh);state.coal=false;$('#coal').checked=false;$('#coal').disabled=true;$('#coal').closest('label').title='Carbón: sin modelo en el visor.';}
-function updateCoal(){}
+function makeCoal(){
+  // Representative particles for the sequence only: neither a DEM calculation nor a mass model.
+  let seed=10405;const random=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};
+  for(let k=0;k<4;k++)for(let j=0;j<18;j++)for(let i=0;i<12;i++){
+    const z=1.67+k*.255,rx=1.00+(z-1.5445)*.39,ry=1.48+(z-1.5445)*.48;
+    coalSeeds.push({p:new THREE.Vector3(.0075+((i+.2+.6*random())/12*2-1)*rx,.02875+((j+.2+.6*random())/18*2-1)*ry,z),size:.085+.025*random(),r:[random()*3,random()*3,random()*3],order:random(),ground:random()});
+  }
+  coalMesh=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1,0),new THREE.MeshStandardMaterial({color:'#252b2d',roughness:.92,metalness:.08,flatShading:true}),coalSeeds.length);
+  coalMesh.name='Carbón ilustrativo - no cálculo de flujo ni impacto';coalMesh.castShadow=false;coalMesh.receiveShadow=true;coalMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);coalMesh.frustumCulled=false;scene.add(coalMesh);
+  $('#coal').disabled=false;$('#coal').closest('label').title='Partículas ilustrativas. No representan tonelaje, granulometría ni resultados de impacto.';
+}
+function updateCoal(){
+  if(!coalMesh)return;coalMesh.visible=state.coal&&state.explosion===0;if(!coalMesh.visible)return;
+  const theta=THREE.MathUtils.degToRad(state.angle),c=Math.cos(theta),s=Math.sin(theta),returning=state.started&&state.time>=returnStart;
+  const flow=returning?1:THREE.MathUtils.clamp((state.angle-32)/38,0,1);
+  for(let i=0;i<coalSeeds.length;i++){
+    const a=coalSeeds[i],p=a.p,x=p.x-.0075,z=p.z-2.3575;dummy.position.set(.0075+c*x+s*z,p.y,2.3575-s*x+c*z);
+    let scale=a.size;
+    if(state.started&&state.time<18){const arrival=(i/coalSeeds.length)*1.4,fall=state.time-arrival;if(fall<0)scale=0;else dummy.position.z=p.z+Math.max(0,5.2575-p.z-4.903325*fall*fall);}
+    const f=THREE.MathUtils.clamp((flow-a.order*.65)/.35,0,1);
+    if(f>0){
+      const outX=.0075+1.84*c+.90*s,outZ=2.3575-1.84*s+.90*c;
+      const gx=3.05+a.ground*1.55,gz=.11+(1-Math.abs(p.y-.02875)/2.1)*.30;
+      if(f<.35){const u=f/.35;dummy.position.x+=(outX-dummy.position.x)*u;dummy.position.z+=(outZ-dummy.position.z)*u;}
+      else{const u=(f-.35)/.65;dummy.position.x=outX+(gx-outX)*u;dummy.position.z=outZ+(gz-outZ)*u*u;}
+    }
+    dummy.rotation.set(a.r[0]+f*3,a.r[1]+theta,a.r[2]+f*2);dummy.scale.set(scale,scale*.83,scale*.76);dummy.updateMatrix();coalMesh.setMatrixAt(i,dummy.matrix);
+  }
+  coalMesh.instanceMatrix.needsUpdate=true;
+}
 function makeDimensions(){
   dimensionsGroup=new THREE.Group();scene.add(dimensionsGroup);dimensionsGroup.visible=false;
   const material=new THREE.LineBasicMaterial({color:'#4684a5',transparent:true,opacity:.85});
@@ -141,9 +169,10 @@ function refreshEdges(force=false){
   if(!machine)return;
   if(!fixedEdges){edgeMaterial=new THREE.LineBasicMaterial({color:'#162e3c',transparent:true,opacity:.34,depthWrite:false,toneMapped:false});fixedEdges=new THREE.LineSegments(new THREE.BufferGeometry(),edgeMaterial);movingEdges=new THREE.LineSegments(new THREE.BufferGeometry(),edgeMaterial);fixed.add(fixedEdges);moving.add(movingEdges);}
   fixedEdges.visible=movingEdges.visible=state.edges;$('#edges').classList.toggle('active',state.edges);$('#edges').setAttribute('aria-pressed',state.edges);
+  for(const m of meshes)if(m.userData.motionEdges)m.userData.motionEdges.visible=state.edges;
   if(!state.edges)return;const arrangement=[state.explosion,state.transmission,state.angle>.1].join('/');if(!force&&arrangement===edgeArrangement)return;edgeArrangement=arrangement;
   const positions={fixed:[],moving:[]};
-  for(const m of meshes){if(!m.visible)continue;const id=m.userData.part;if(!edgeCache.has(id))edgeCache.set(id,new THREE.EdgesGeometry(m.geometry,32));const p=edgeCache.get(id).attributes.position;m.updateMatrix();const e=m.matrix.elements,out=m.userData.moving?positions.moving:positions.fixed;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i);out.push(e[0]*x+e[4]*y+e[8]*z+e[12],e[1]*x+e[5]*y+e[9]*z+e[13],e[2]*x+e[6]*y+e[10]*z+e[14]);}}
+  for(const m of meshes){if(!m.visible)continue;const id=m.userData.part;if(!edgeCache.has(id))edgeCache.set(id,new THREE.EdgesGeometry(m.geometry,32));if(m.userData.pin||m.userData.pawl){if(!m.userData.motionEdges){m.userData.motionEdges=new THREE.LineSegments(edgeCache.get(id),edgeMaterial);m.userData.motionEdges.raycast=()=>{};m.add(m.userData.motionEdges);}continue;}const p=edgeCache.get(id).attributes.position;m.updateMatrix();const e=m.matrix.elements,out=m.userData.moving?positions.moving:positions.fixed;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i);out.push(e[0]*x+e[4]*y+e[8]*z+e[12],e[1]*x+e[5]*y+e[9]*z+e[13],e[2]*x+e[6]*y+e[10]*z+e[14]);}}
   for(const [line,points] of [[fixedEdges,positions.fixed],[movingEdges,positions.moving]]){line.geometry.dispose();line.geometry=new THREE.BufferGeometry();line.geometry.setAttribute('position',new THREE.Float32BufferAttribute(points,3));line.geometry.computeBoundingSphere();}
 }
 function toggleEdges(){
@@ -156,10 +185,17 @@ function toggleSection(){
 function clearSelection(){for(const m of meshes){if(m.userData.highlight){m.material=m.userData.material;m.userData.highlight.dispose();m.userData.highlight=null;}}selectedParts.clear();$('#part-tooltip').hidden=true;}
 function selectParts(codes){
   clearSelection();selectedParts=new Set(codes);for(const m of meshes)if(selectedParts.has(m.userData.part)){m.userData.highlight=m.material.clone();m.userData.highlight.color.set('#2e9cd0');m.userData.highlight.emissive.set('#1c6e99');m.userData.highlight.emissiveIntensity=.35;m.material=m.userData.highlight;}
-  const p=data.parts.find(p=>p.code===codes[0]);if(!p)return;$('#selected-code').textContent=codes.length>1?p.family+' · '+codes.length+' códigos':p.code;$('#selected-title').textContent=p.title;const all=data.parts.filter(p=>selectedParts.has(p.code));$('#selected-meta').textContent=all.reduce((n,p)=>n+p.quantity,0)+' uds. · '+nf(all.reduce((n,p)=>n+(p.massKg||0),0),1)+' kg · '+p.material;$('#part-tooltip').hidden=false;
+  const p=data.parts.find(p=>p.code===codes[0]);if(!p)return;$('#selected-code').textContent=codes.length>1?p.family+' · '+codes.length+' códigos':p.code;$('#selected-title').textContent=p.title;const all=data.parts.filter(p=>selectedParts.has(p.code));$('#selected-meta').textContent=all.reduce((n,p)=>n+p.quantity,0)+' uds. · '+nf(all.reduce((n,p)=>n+(p.massKg||0),0),1)+(all.some(p=>p.massKg==null)?' kg registrados · hay masa n/d':' kg')+' · '+p.material;$('#part-tooltip').hidden=false;
 }
 function animate(now){requestAnimationFrame(animate);const dt=Math.min(.1,(now-lastFrame)/1000);lastFrame=now;if($('#simulacion').hidden)return;if(state.playing)updateCycle(dt);controls.update();renderer.render(scene,camera);if(state.dimensions)updateDimensionLabels();frameCount++;}
 
+function renderSummary(){
+  const s=data.summary;
+  const counts=$$('.parts-summary strong');counts[0].textContent=nf(s.instanceCount,0);counts[1].textContent=nf(s.uniquePartCodes,0);counts[2].innerHTML=nf(s.totalMassKg,0)+' <small>kg</small>';
+  $('.parts-summary p').textContent=s.massScope+' Clic en una pieza para verla en el modelo.';
+  $('[data-calc-tab="results"] span').textContent=data.calculations.length;
+  $('[data-calc-tab="checks"] span').textContent=data.checks.length;
+}
 function renderMetrics(){
   const s=data.summary;const cards=[['VOLUMEN ÚTIL',nf(s.usefulVolumeM3,3),'m³','Volumen útil de la tolva.'],['CARGA MÁXIMA',nf(s.capacityRangeKg[0]/1000,2),'t','Límite de carga del proyecto: 10 t.'],['PAR DE SERVICIO',nf(s.operatingTorqueNm/1000,2),'kN·m','Máximo del estudio de frenado: '+nf(s.peakTransmittedTorqueNm/1000,2)+' kN·m.'],['MASA MÓVIL',nf(s.movingMassKg/1000,3),'t','Masa móvil registrada; equipos comerciales por acreditar.']];
   $('#calculation-metrics').innerHTML=cards.map(([title,v,unit,note])=>`<div class="metric-card"><span>${title}</span><strong>${v}<small>${unit}</small></strong><p>${note}</p></div>`).join('');
@@ -187,9 +223,9 @@ function renderParts(){
   const rows=(grouped?data.families:data.parts).filter(p=>(!cat||p.category===cat)&&[p.title,p.code,p.material||'',...(p.codes||[])].some(x=>x.toLowerCase().includes(q)));
   $('#parts-count').textContent=rows.length+' '+(grouped?'familias':'códigos');$('#parts-empty').hidden=rows.length>0;
   $('#parts-body').innerHTML=rows.map(p=>`<tr><td class="code">${escape(p.code)}</td><td><span class="cell-title">${escape(p.title)}</span><span class="cell-subtitle">${escape(p.material||[...new Set(data.parts.filter(k=>p.codes.includes(k.code)).map(k=>k.material))].join(' / '))}</span></td><td><span class="cell-subtitle">${escape(p.category)}</span></td><td class="numeric">${p.quantity}</td><td class="numeric">${p.massKg==null?'n/d':nf(p.massKg,2)}</td><td><button class="part-locate" data-locate="${escape(p.code)}" data-grouped="${grouped}">Ver en 3D ↗</button></td></tr>`).join('');
-  $$('#parts-body [data-locate]').forEach(b=>b.addEventListener('click',()=>{const row=(b.dataset.grouped==='true'?data.families:data.parts).find(p=>p.code===b.dataset.locate);location.hash='simulacion';requestAnimationFrame(()=>{if(!machine){toast('El visor está terminando de cargar');return;}reset();if(row.category==='Accionamiento'||row.category==='Transmisión'){state.transmission=true;$('#transmission').checked=true;updatePose();}selectParts(row.codes||[row.code]);view('iso');});}));
+  $$('#parts-body [data-locate]').forEach(b=>b.addEventListener('click',()=>{const row=(b.dataset.grouped==='true'?data.families:data.parts).find(p=>p.code===b.dataset.locate);location.hash='simulacion';requestAnimationFrame(()=>{if(!machine){toast('El visor está terminando de cargar');return;}reset();if(/Accionamiento|Transmisión/.test(row.category)){state.transmission=true;$('#transmission').checked=true;updatePose();}selectParts(row.codes||[row.code]);view('iso');});}));
 }
-function downloadParts(){const header=['Codigo','Pieza','Conjunto','Material','Cantidad','Masa unitaria kg','Masa total kg'];const lines=[header,...data.parts.map(p=>[p.code,p.title,p.category,p.material,p.quantity,p.unitMassKg,p.massKg])].map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\r\n');const blob=new Blob(['\ufeff'+lines],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SESUVECA_TOLVA_TROMPO_PIEZAS.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function downloadParts(){const header=['Codigo','Pieza','Conjunto','Material','Cantidad','Masa unitaria kg','Masa total kg'];const lines=[header,...data.parts.map(p=>[p.code,p.title,p.category,p.material,p.quantity,p.unitMassKg,p.massKg])].map(r=>r.map(x=>'"'+String(x??'n/d').replaceAll('"','""')+'"').join(';')).join('\r\n');const blob=new Blob(['\ufeff'+lines],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SESUVECA_TOLVA_TROMPO_PIEZAS.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 
 function wireEvents(){
   $$('[data-view]').forEach(b=>b.addEventListener('click',()=>view(b.dataset.view)));$('#extra-view').addEventListener('change',e=>e.target.value&&view(e.target.value));$$('[data-angle]').forEach(b=>b.addEventListener('click',()=>setAngle(b.dataset.angle)));
@@ -205,7 +241,7 @@ function wireEvents(){
 }
 
 async function start(){
-  try{const r=await fetch('data/project-c05.json?v=20261016-PC');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderMetrics();calcOptions();renderCalc();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
+  try{const r=await fetch('data/project-c05.json?v=20261024');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderSummary();renderMetrics();calcOptions();renderCalc();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
   catch(error){console.error(error);$('#loading').innerHTML='<strong>No se pudo iniciar el visor 3D.</strong><span>Comprueba que WebGL esté habilitado y recarga la página.</span><button onclick="location.reload()">Reintentar</button>';toast('Los datos del proyecto permanecen disponibles en sus pestañas.');}
 }
 start();

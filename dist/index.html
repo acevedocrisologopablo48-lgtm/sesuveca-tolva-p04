@@ -23,7 +23,7 @@
 
   <main>
     <section id="simulacion" class="tab-panel">
-      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>Conjunto 3D</h2></div><span class="quiet-tag"><i></i> Modelo 3D · Proyecto TT10</span></div>
+      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>Conjunto 3D</h2></div><span class="quiet-tag"><i></i> CAD C05 · 24/10/2026</span></div>
       <div class="workspace">
         <div class="viewer-column">
           <div class="toolbar">
@@ -57,14 +57,14 @@
             <div class="machine-status"><span id="brake-status">● Freno aplicado</span><strong id="machine-speed">0,00 rpm</strong></div>
           </div>
           <div class="operation-body display-options"><div class="operation-title"><span class="number-mark">02</span><div><h3>Explorar el conjunto</h3></div></div>
-            <label class="switch-row"><span>Representación del carbón</span><input id="coal" type="checkbox" checked><span class="switch" aria-hidden="true"></span></label>
+            <label class="switch-row"><span>Carbón · representación aproximada</span><input id="coal" type="checkbox" checked><span class="switch" aria-hidden="true"></span></label>
             <label class="switch-row"><span>Ver transmisión sin guardas</span><input id="transmission" type="checkbox"><span class="switch" aria-hidden="true"></span></label>
             <label for="explode" class="explode-label"><span>Separar piezas</span><strong id="explode-value">0 %</strong></label><input id="explode" type="range" min="0" max="100" value="0" step="1">
           </div>
           <div class="operation-foot"><span class="field-label">ACCIONAMIENTO ELÉCTRICO</span><strong>Motorreductor y frenos de salida</strong><p>380 V · 3 fases · 60 Hz<br>70° en 60 s</p><a href="#calculos" class="inline-link" data-jump-commercial>Ver componentes <span>↗</span></a></div>
         </aside>
       </div>
-      <div class="capacity-strip"><span class="info-icon">i</span><p><strong>Tolva trompo · 10 t.</strong> Planos y lista de materiales en Documentos.</p><a href="#documentos">Descargas →</a></div>
+      <div class="capacity-strip"><span class="info-icon">i</span><p><strong>Tolva trompo · 10 t.</strong> Simulación cinemática. Documentación para revisión; liberación de fabricación no emitida.</p><a href="#documentos">Descargas →</a></div>
     </section>
 
     <section id="calculos" class="tab-panel" hidden>
@@ -80,12 +80,12 @@
 
     <section id="piezas" class="tab-panel" hidden>
       <div class="section-intro"><div><span class="section-kicker">LISTA DE MATERIALES</span><h2>Piezas y materiales</h2></div><button id="download-parts" class="outline-button">↓ Exportar lista CSV</button></div>
-      <div class="parts-summary"><div><strong>943</strong><span>instancias en el visor</span></div><div><strong>468</strong><span>códigos del visor</span></div><div><strong>17 819 <small>kg</small></strong><span>suma de masas definidas</span></div><p>Datos del modelo. Masa sin dato: n/d. Clic en una pieza para verla en el modelo.</p></div>
+      <div class="parts-summary"><div><strong>1004</strong><span>instancias en el visor</span></div><div><strong>500</strong><span>códigos del visor</span></div><div><strong>16 285 <small>kg</small></strong><span>masa registrada · parcial</span></div><p>Datos del modelo. Masa sin dato: n/d. Clic en una pieza para verla en el modelo.</p></div>
       <div class="content-card"><div class="table-controls"><label class="search"><span>⌕</span><input id="parts-search" placeholder="Buscar pieza, código o material…" aria-label="Buscar pieza, código o material"></label><select id="parts-category" aria-label="Filtrar piezas por conjunto"><option value="">Todos los conjuntos</option></select><label class="compact-check"><input id="group-parts" type="checkbox" checked> Agrupar similares</label><span class="result-count" id="parts-count"></span></div><div class="table-scroll"><table class="parts-table"><thead><tr><th>Código</th><th>Pieza / componente</th><th>Conjunto</th><th class="numeric">Cant.</th><th class="numeric">Masa total · kg</th><th></th></tr></thead><tbody id="parts-body"></tbody></table></div><div id="parts-empty" class="empty" hidden>No hay piezas que coincidan con la búsqueda.</div></div>
     </section>
-  <section id="documentos" class="tab-panel" hidden><div class="section-intro"><div><span class="section-kicker">16/10/2026</span><h2>Documentos</h2></div></div><div class="commercial-grid"><article class="commercial-card"><h3>Planos por conjuntos</h3><p>26 conjuntos · 34 láminas A3</p><a href="documentos/TT10_PLANOS_CONJUNTOS.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Materiales y compras</h3><p>Cantidades y especificaciones · Sin precios</p><a href="documentos/TT10_BOM_COMPRAS.xlsx" download>Excel ↗</a> · <a href="documentos/TT10_BOM_COMPRAS.pdf" download>PDF ↗</a></article><article class="commercial-card"><h3>Informe de cálculo</h3><p>Transmisión, pasadores y bastidor</p><a href="documentos/TT10_INFORME_CALCULO.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Perfiles de corte</h3><p>135 DXF · mm · escala 1:1</p><a href="documentos/TT10_DXF_CORTE.zip" download>Descargar ↗</a></article></div></section></main>
+  <section id="documentos" class="tab-panel" hidden><div class="section-intro"><div><span class="section-kicker">ACTUALIZACIÓN 24/10/2026</span><h2>Documentos</h2></div></div><div class="commercial-grid"><article class="commercial-card"><h3>Planos por conjuntos</h3><p>26 conjuntos · 34 láminas A3 · emisión 16/10/2026</p><a href="documentos/TT10_PLANOS_CONJUNTOS.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Materiales y compras</h3><p>Cantidades y especificaciones · Sin precios</p><a href="documentos/TT10_BOM_COMPRAS.xlsx" download>Excel ↗</a> · <a href="documentos/TT10_BOM_COMPRAS.pdf" download>PDF ↗</a></article><article class="commercial-card"><h3>Informe de cálculo</h3><p>Transmisión, bloqueo, impacto y evidencia · 24/10/2026</p><a href="documentos/TT10_INFORME_CALCULO.pdf" download>Descargar ↗</a></article><article class="commercial-card"><h3>Perfiles de corte</h3><p>135 DXF · mm · escala 1:1</p><a href="documentos/TT10_DXF_CORTE.zip" download>Descargar ↗</a></article></div></section></main>
   <footer><span>SESUVECA / TOLVA TROMPO</span></footer>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script type="module" src="app-c05.js?v=20261016-TT10"></script>
+  <script type="module" src="app-c05.js?v=20261024-TT10"></script>
 </body>
 </html>
