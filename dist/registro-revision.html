@@ -1,29 +1,20 @@
 <!doctype html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Datos del proyecto · SESUVECA</title>
-  <link rel="icon" href="assets/sesuveca-logo.png"><link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header class="header"><a class="brand" href="index.html"><img src="assets/sesuveca-logo.png" alt="SESUVECA"></a><div class="project-heading"><span class="eyebrow">PROYECTO TT10</span><h1>TOLVA TROMPO</h1></div></header>
-  <main>
-    <div class="section-intro"><div><span class="section-kicker">24/10/2026</span><h2>Evidencia del proyecto</h2></div><a class="outline-button" href="index.html#calculos">Volver a Cálculos</a></div>
-    <div class="content-card"><div class="table-scroll"><table><thead><tr><th>Comprobación</th><th>Resultado y alcance</th></tr></thead><tbody>
-      <tr><td>Archivo de referencia</td><td>TT10_C05_CONJUNTO.SLDASM · configuración PN_00_CARGA. 500 códigos y 1004 instancias, con posiciones tomadas del inventario nativo actual.</td></tr>
-      <tr><td>Geometría del visor</td><td>45 mallas extraídas de las piezas actuales en SolidWorks 2026. Se conservan las mallas de las otras 455 piezas sin modificación, contrastadas con los volúmenes de la BOM.</td></tr>
-      <tr><td>Reconstrucción nativa</td><td>SolidWorks 2026: reconstrucción recursiva completada, 510 documentos resueltos, cero referencias inexistentes y cero errores de operaciones en el conjunto principal. Archivo fuente conservado.</td></tr>
-      <tr><td>Recuperación y bloqueo</td><td>Las 61 instancias de la rama BDNB y los pasadores Ø65 están incorporados en el visor. La integración geométrica no acredita la retención dinámica.</td></tr>
-      <tr><td>Movimiento</td><td>Ciclo de 160 s: recepción, giro 0–70°, descarga y retorno; máximo calculado de 0,365 rpm. Prueba numérica sin fallos. Carbón ilustrativo: no representa tonelaje, granulometría ni un ensayo de descarga.</td></tr>
-      <tr><td>Masas</td><td>16 285,36 kg registrados, de los que 9388,65 kg corresponden al conjunto móvil. Sumas parciales: 83 códigos sin masa acreditada.</td></tr>
-      <tr><td>Frenado</td><td>576 escenarios de sensibilidad existentes: máximo de 333,20 kN·m frente al límite estudiado de 350 kN·m. Inercias, rozamiento y respuesta de disparo paramétricos.</td></tr>
-      <tr><td>Caída y fondo</td><td>Piedra de 5 kg desde 2 m sobre la boca: 182,06 J hasta el revestimiento; 183,87 J en las juntas expuestas. Fondo con 30,57 MPa de flexión estática bruta. No se equipara ese cálculo estático con la resistencia al golpe.</td></tr>
-      <tr><td>Resistencia integral</td><td>No liberada para fabricación. El impacto completo, las interfaces y retención reales de los equipos, las uniones y el barrido de interferencias no cuentan con una aceptación integral en los registros actuales.</td></tr>
-      <tr><td>Alcance civil</td><td>Losa, cimentación y capacidad de anclajes fuera del alcance solicitado.</td></tr>
-      <tr><td>Verificación de esta publicación</td><td>Datos, geometría y cinemática comprobados por código. Revisión visual nueva no realizada: automatización local del navegador deshabilitada.</td></tr>
-    </tbody></table></div></div>
-    <p><a class="outline-button" href="documentos/TT10_INFORME_CALCULO.pdf">Informe de cálculo actualizado ↓</a></p>
-  </main>
-  <footer><span>SESUVECA / TOLVA TROMPO</span></footer>
-</body>
-</html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidencia del proyecto · SESUVECA</title><link rel="icon" href="assets/sesuveca-logo.png"><link rel="stylesheet" href="styles.css"></head><body>
+<header class="header"><a class="brand" href="index.html"><img src="assets/sesuveca-logo.png" alt="SESUVECA"></a><div class="project-heading"><span class="eyebrow">PROYECTO TT10</span><h1>TOLVA TROMPO</h1></div></header><main>
+<div class="section-intro"><div><span class="section-kicker">25/10/2026</span><h2>Evidencia del modelo actual</h2></div><a class="outline-button" href="index.html#calculos">Volver a Cálculos</a></div>
+<div class="content-card"><div class="table-scroll"><table><thead><tr><th>Comprobación</th><th>Resultado y alcance</th></tr></thead><tbody>
+<tr><td>Fuente nativa</td><td>TT10_C05_CONJUNTO.SLDASM, revisión interna C06. Inventario PN_00_CARGA: 492 códigos y 996 instancias. Se conservan las transformaciones del ensamblaje.</td></tr>
+<tr><td>Geometría actualizada</td><td>Se incorporan las 16 piezas revisadas del bloqueo y el paso de cadena de la plataforma. Los ocho códigos suprimidos del modelo ya no forman parte del visor. Las demás geometrías se contrastan con los volúmenes de la BOM.</td></tr>
+<tr><td>Bloqueo</td><td>Brazos monolíticos, yugos, cabezales, postes, bases, orejas y puentes según el modelo de trabajo. Pasador Ø65 de 34CrNiMo6+QT con Rp0,2 mínimo especificado de 800 MPa; no se declara ensayo del material suministrado.</td></tr>
+<tr><td>Movimiento interactivo</td><td>Secuencia de recepción, retirada de pasadores, giro 0–70°, descarga y retorno; 160 s por ciclo visual y máximo cinemático de 0,365 rpm. Carbón ilustrativo: no equivale a tonelaje, granulometría, flujo o respuesta al impacto.</td></tr>
+<tr><td>Materiales y despiece</td><td>La BOM identifica 492 códigos y 996 instancias. Se incluyen 36 chapas de 18 definiciones internas para seis cajones soldados; sus 1.800,720 kg ya forman parte de la masa de los padres y no se suman de nuevo. Despiece en la hoja Excel, el anexo PDF y los archivos CSV/JSON.</td></tr>
+<tr><td>Planos y descargas</td><td>102 hojas A4 horizontales: montajes, listas, detalles y anexos de mecanizado. 151 perfiles DXF, archivos nativos de SolidWorks con sus referencias, conjunto STEP, BOM Excel/PDF e informe de cálculo sincronizados con la entrega del 25/10/2026.</td></tr>
+<tr><td>Holguras locales</td><td>Retracción de 210 mm por pasador. Cuatro pares de mallas comprobados con intervalos angulares continuos 0–70°: cotas inferiores de 36,526 y 44,086 mm. El alcance no es toda la máquina ni el error certificado de la teselación.</td></tr>
+<tr><td>Masa</td><td>17.378,657 kg de masa disponible, incluidos 10.075,562 kg móviles. Subtotales de piezas con datos: 83 códigos carecen de masa acreditada.</td></tr>
+<tr><td>Carga y accionamiento</td><td>Par de control de 73 kN·m; demanda con FS 1,75 de 127,75 kN·m frente a 150,26 kN·m nominales. Selección de cálculo: 317M R4 i953 + PSN142 i5. La comparación de par no aprueba las interfaces físicas.</td></tr>
+<tr><td>Frenado calculado</td><td>Modelo rígido con dos frenos: parada nominal máxima de 1,298 s; 2,015 s al dividir la capacidad por FS 1,5. Fricción, inercias, retardo y rampa son hipótesis declaradas. No es un ensayo real ni un cálculo completo del pico elástico.</td></tr>
+<tr><td>Impacto</td><td>Piedra de 5 kg desde 1,5 m hasta el contacto: 73,55 J. Control energético con factor 2: 147,10 J. Fondo: 61,13 MPa bajo presión uniforme multiplicada por 2. Estos controles no validan contacto local, liner de 10 mm, fijaciones ni fatiga.</td></tr>
+<tr><td>Correspondencia geométrica</td><td>Dos solapes BRep confirmados en la transmisión: 5.607.742,89 y 1.960.353,82 mm³. No están clasificados como contactos funcionales aceptados.</td></tr>
+<tr><td>Estado técnico</td><td><strong>NO LIBERADA PARA FABRICACIÓN.</strong> Modelo y documentos para revisión, con el estado indicado en cada archivo. La losa y capacidad de anclajes al concreto quedan fuera del alcance.</td></tr>
+<tr><td>Verificación web</td><td>Datos, cantidades, geometrías y secuencia cinemática contrastados por código. Revisión visual en el navegador el 25/10/2026: 0°/70°, cinco vistas, selección del brazo M276 y consulta de piezas y cálculos. No equivale a una prueba física de la máquina.</td></tr>
+</tbody></table></div></div><p><a class="outline-button" href="documentos/TT10_INFORME_CALCULO.pdf">Informe de cálculo ↓</a></p></main><footer><span>SESUVECA / JAVIER ACEVEDO</span></footer></body></html>

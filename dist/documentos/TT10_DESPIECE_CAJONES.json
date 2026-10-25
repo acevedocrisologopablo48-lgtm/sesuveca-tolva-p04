@@ -1,0 +1,216 @@
+{
+  "date": "2026-10-25",
+  "units": "mm",
+  "definitions": 18,
+  "plates": 36,
+  "parent_codes": [
+    "TT10_F506",
+    "TT10_F611",
+    "TT10_M131",
+    "TT10_M161",
+    "TT10_M201",
+    "TT10_M311"
+  ],
+  "mass_included_in_parent_BOM_kg": 1800.7202417669682,
+  "add_to_main_BOM_mass": false,
+  "rows": [
+    {
+      "parent": "TT10_M161",
+      "code": "TT10_M161_CH01",
+      "cantidad_total": 2,
+      "material": "Strenx700E t30; Rp0.2min700MPa",
+      "width_mm": 400.0,
+      "height_mm": 1116.0,
+      "thickness_mm": 30.0,
+      "area_m2": 0.41435261334073054,
+      "masa_kg": 195.16008088348408
+    },
+    {
+      "parent": "TT10_M161",
+      "code": "TT10_M161_CH02",
+      "cantidad_total": 2,
+      "material": "Strenx700E t30; Rp0.2min700MPa",
+      "width_mm": 140.0,
+      "height_mm": 1116.0,
+      "thickness_mm": 30.0,
+      "area_m2": 0.15624,
+      "masa_kg": 73.58904
+    },
+    {
+      "parent": "TT10_M161",
+      "code": "TT10_M161_CH03",
+      "cantidad_total": 2,
+      "material": "Strenx700E t30; Rp0.2min700MPa",
+      "width_mm": 340.0,
+      "height_mm": 140.0,
+      "thickness_mm": 30.0,
+      "area_m2": 0.0476,
+      "masa_kg": 22.4196
+    },
+    {
+      "parent": "TT10_M311",
+      "code": "TT10_M311_CH01",
+      "cantidad_total": 2,
+      "material": "Strenx700E t30; Rp0.2min700MPa",
+      "width_mm": 400.0,
+      "height_mm": 1116.0,
+      "thickness_mm": 30.0,
+      "area_m2": 0.41435261334073054,
+      "masa_kg": 195.16008088348408
+    },
+    {
+      "parent": "TT10_M311",
+      "code": "TT10_M311_CH02",
+      "cantidad_total": 2,
+      "material": "Strenx700E t30; Rp0.2min700MPa",
+      "width_mm": 140.0,
+      "height_mm": 1116.0,
+      "thickness_mm": 30.0,
+      "area_m2": 0.15624,
+      "masa_kg": 73.58904
+    },
+    {
+      "parent": "TT10_M311",
+      "code": "TT10_M311_CH03",
+      "cantidad_total": 2,
+      "material": "Strenx700E t30; Rp0.2min700MPa",
+      "width_mm": 340.0,
+      "height_mm": 140.0,
+      "thickness_mm": 30.0,
+      "area_m2": 0.0476,
+      "masa_kg": 22.4196
+    },
+    {
+      "parent": "TT10_M201",
+      "code": "TT10_M201_CH01",
+      "cantidad_total": 2,
+      "material": "Strenx700E t40; Rp0.2min700MPa",
+      "width_mm": 1200.0,
+      "height_mm": 200.0,
+      "thickness_mm": 40.0,
+      "area_m2": 0.24,
+      "masa_kg": 150.72
+    },
+    {
+      "parent": "TT10_M201",
+      "code": "TT10_M201_CH02",
+      "cantidad_total": 2,
+      "material": "Strenx700E t40; Rp0.2min700MPa",
+      "width_mm": 1200.0,
+      "height_mm": 120.0,
+      "thickness_mm": 40.0,
+      "area_m2": 0.144,
+      "masa_kg": 90.43199999999999
+    },
+    {
+      "parent": "TT10_M201",
+      "code": "TT10_M201_CH03",
+      "cantidad_total": 2,
+      "material": "Strenx700E t40; Rp0.2min700MPa",
+      "width_mm": 120.0,
+      "height_mm": 120.0,
+      "thickness_mm": 40.0,
+      "area_m2": 0.0144,
+      "masa_kg": 9.0432
+    },
+    {
+      "parent": "TT10_M131",
+      "code": "TT10_M131_CH01",
+      "cantidad_total": 2,
+      "material": "Strenx700E t40; Rp0.2min700MPa",
+      "width_mm": 1200.0,
+      "height_mm": 200.0,
+      "thickness_mm": 40.0,
+      "area_m2": 0.24,
+      "masa_kg": 150.72
+    },
+    {
+      "parent": "TT10_M131",
+      "code": "TT10_M131_CH02",
+      "cantidad_total": 2,
+      "material": "Strenx700E t40; Rp0.2min700MPa",
+      "width_mm": 1200.0,
+      "height_mm": 120.0,
+      "thickness_mm": 40.0,
+      "area_m2": 0.144,
+      "masa_kg": 90.43199999999999
+    },
+    {
+      "parent": "TT10_M131",
+      "code": "TT10_M131_CH03",
+      "cantidad_total": 2,
+      "material": "Strenx700E t40; Rp0.2min700MPa",
+      "width_mm": 120.0,
+      "height_mm": 120.0,
+      "thickness_mm": 40.0,
+      "area_m2": 0.0144,
+      "masa_kg": 9.0432
+    },
+    {
+      "parent": "TT10_F506",
+      "code": "TT10_F506_CH01",
+      "cantidad_total": 2,
+      "material": "Strenx700E t20; Rp0.2min700MPa",
+      "width_mm": 300.0,
+      "height_mm": 2395.0,
+      "thickness_mm": 20.0,
+      "area_m2": 0.7185,
+      "masa_kg": 225.609
+    },
+    {
+      "parent": "TT10_F506",
+      "code": "TT10_F506_CH02",
+      "cantidad_total": 2,
+      "material": "Strenx700E t20; Rp0.2min700MPa",
+      "width_mm": 160.0,
+      "height_mm": 2395.0,
+      "thickness_mm": 20.0,
+      "area_m2": 0.3832,
+      "masa_kg": 120.3248
+    },
+    {
+      "parent": "TT10_F506",
+      "code": "TT10_F506_CH03",
+      "cantidad_total": 2,
+      "material": "Strenx700E t20; Rp0.2min700MPa",
+      "width_mm": 260.0,
+      "height_mm": 160.0,
+      "thickness_mm": 20.0,
+      "area_m2": 0.0416,
+      "masa_kg": 13.062399999999998
+    },
+    {
+      "parent": "TT10_F611",
+      "code": "TT10_F611_CH01",
+      "cantidad_total": 2,
+      "material": "Strenx700E t20; Rp0.2min700MPa",
+      "width_mm": 300.0,
+      "height_mm": 2395.0,
+      "thickness_mm": 20.0,
+      "area_m2": 0.7185,
+      "masa_kg": 225.609
+    },
+    {
+      "parent": "TT10_F611",
+      "code": "TT10_F611_CH02",
+      "cantidad_total": 2,
+      "material": "Strenx700E t20; Rp0.2min700MPa",
+      "width_mm": 160.0,
+      "height_mm": 2395.0,
+      "thickness_mm": 20.0,
+      "area_m2": 0.3832,
+      "masa_kg": 120.3248
+    },
+    {
+      "parent": "TT10_F611",
+      "code": "TT10_F611_CH03",
+      "cantidad_total": 2,
+      "material": "Strenx700E t20; Rp0.2min700MPa",
+      "width_mm": 260.0,
+      "height_mm": 160.0,
+      "thickness_mm": 20.0,
+      "area_m2": 0.0416,
+      "masa_kg": 13.062399999999998
+    }
+  ]
+}

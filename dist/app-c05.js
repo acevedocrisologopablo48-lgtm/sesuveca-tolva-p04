@@ -52,7 +52,7 @@ function prepareGeometry(geometry){
 }
 
 async function init3D(){
-  const [meta,binary]=await Promise.all([fetch('assets/machine-c05.json?v=20261024').then(r=>r.json()),fetch('assets/machine-c05.bin?v=20261024').then(r=>r.arrayBuffer())]);
+  const [meta,binary]=await Promise.all([fetch('assets/machine-c05.json?v=20261025').then(r=>r.json()),fetch('assets/machine-c05.bin?v=20261025').then(r=>r.arrayBuffer())]);
   scene=new THREE.Scene();scene.background=new THREE.Color('#dce4eb');
   renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.domElement.style.width='100%';renderer.domElement.style.height='100%';renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.06;renderer.localClippingEnabled=true;
@@ -95,7 +95,7 @@ async function init3D(){
   renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
   renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const rect=renderer.domElement.getBoundingClientRect();raycaster.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hits=raycaster.intersectObjects(meshes.filter(m=>m.visible));const hit=hits.find(h=>!state.section||h.point.x>=0);if(hit)selectParts([hit.object.userData.part]);else clearSelection();});
   new ResizeObserver(resize).observe($('#viewport'));document.addEventListener('fullscreenchange',resize);
-  view('iso');resize();updatePose();$('#scene').dataset.rendererVersion='TT10-nativo-20261024';$('#loading').hidden=true;requestAnimationFrame(animate);
+  view('iso');resize();updatePose();$('#scene').dataset.rendererVersion='TT10-nativo-20261025';$('#loading').hidden=true;requestAnimationFrame(animate);
   window.p04={state,data,meshes,scene,camera,controls,setAngle,view,selectParts,meta,renderer};
 }
 
@@ -195,10 +195,14 @@ function renderSummary(){
   $('.parts-summary p').textContent=s.massScope+' Clic en una pieza para verla en el modelo.';
   $('[data-calc-tab="results"] span').textContent=data.calculations.length;
   $('[data-calc-tab="checks"] span').textContent=data.checks.length;
+  const v=$('#volume-value');if(v)v.innerHTML=nf(s.usefulVolumeM3,3)+' <small>m³</small>';
 }
 function renderMetrics(){
-  const s=data.summary;const cards=[['VOLUMEN ÚTIL',nf(s.usefulVolumeM3,3),'m³','Volumen útil de la tolva.'],['CARGA MÁXIMA',nf(s.capacityRangeKg[0]/1000,2),'t','Límite de carga del proyecto: 10 t.'],['PAR DE SERVICIO',nf(s.operatingTorqueNm/1000,2),'kN·m','Máximo del estudio de frenado: '+nf(s.peakTransmittedTorqueNm/1000,2)+' kN·m.'],['MASA MÓVIL',nf(s.movingMassKg/1000,3),'t','Masa móvil registrada; equipos comerciales por acreditar.']];
+  const s=data.summary;const cards=[['VOLUMEN GEOMÉTRICO',nf(s.usefulVolumeM3,3),'m³',s.volumeScope],['CARGA RESISTENTE',nf(s.capacityRangeKg[0]/1000,2),'t','Caso de cálculo del proyecto: 10 t.'],['PAR DE CONTROL',nf(s.operatingTorqueNm/1000,2),'kN·m','Parada nominal del modelo con dos frenos: '+nf(s.stopModelMaxS,3)+' s.'],['MASA MÓVIL DISPONIBLE',nf(s.movingMassKg/1000,3),'t','Subtotal de piezas con datos; equipos comerciales por acreditar.']];
   $('#calculation-metrics').innerHTML=cards.map(([title,v,unit,note])=>`<div class="metric-card"><span>${title}</span><strong>${v}<small>${unit}</small></strong><p>${note}</p></div>`).join('');
+}
+async function renderDocuments(){
+  try{const r=await fetch('data/documentos.json?v=20261025');if(!r.ok)return;const d=await r.json(),plans=d.files.find(x=>x.name==='TT10_PLANOS_CONJUNTOS.pdf');if(plans){const size=(plans.page_sizes_mm||[]).map(([w,h])=>Math.abs(w-297)<1&&Math.abs(h-210)<1?'A4 horizontal':`${nf(w,0)} × ${nf(h,0)} mm`).join(' / ');$('#plans-meta').textContent=`${plans.pages} láminas · ${size} · revisión disponible para descarga`;}}catch{}
 }
 function calcOptions(){const rows=calcTab==='checks'?data.checks:data.calculations;const values=[...new Set(rows.map(r=>r.category))].sort();$('#calc-category').innerHTML='<option value="">Todos los temas</option>'+values.map(v=>`<option>${escape(v)}</option>`).join('');}
 function displayNumeric(d){if(!d)return '—';return d.value==null?'n/d':typeof d.value==='number'?nf(d.value,Math.abs(d.value)>=10000?0:2)+' <span class="cell-subtitle" style="display:inline">'+escape(d.unit)+'</span>':escape(d.value)+' '+escape(d.unit);}
@@ -241,7 +245,7 @@ function wireEvents(){
 }
 
 async function start(){
-  try{const r=await fetch('data/project-c05.json?v=20261024');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderSummary();renderMetrics();calcOptions();renderCalc();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
+  try{const r=await fetch('data/project-c05.json?v=20261025');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderSummary();renderMetrics();calcOptions();renderCalc();renderDocuments();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
   catch(error){console.error(error);$('#loading').innerHTML='<strong>No se pudo iniciar el visor 3D.</strong><span>Comprueba que WebGL esté habilitado y recarga la página.</span><button onclick="location.reload()">Reintentar</button>';toast('Los datos del proyecto permanecen disponibles en sus pestañas.');}
 }
 start();
