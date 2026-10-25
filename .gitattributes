@@ -3,3 +3,6 @@
 *.zip binary
 *.bin binary
 *.png binary
+*.step binary
+*.csv binary
+dist/documentos/*.json binary
