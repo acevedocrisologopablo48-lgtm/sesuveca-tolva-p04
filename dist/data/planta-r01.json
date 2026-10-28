@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-28",
+  "revision": "R01",
+  "source_native_sha256": "62f3a6cd023e0244675fbdc58d2dc2239df6d24350ea71acceade542822c8b61",
+  "files": [
+    {
+      "file": "documentos/PLANTA_SELECCION_CARBON_IMPLANTACION_R01.pdf",
+      "bytes": 514953,
+      "sha256": "9665316f47eb44617c5a37b18602c2e2f91166727e5b21c83a2e31cba2838f45"
+    },
+    {
+      "file": "documentos/PLANTA_SELECCION_CARBON_R01.step",
+      "bytes": 31873533,
+      "sha256": "43caeae66c6a5e4a23822963400fb530881f23ffd906de5e572e0f4376df79f3"
+    },
+    {
+      "file": "documentos/PLANTA_SELECCION_CARBON_R01.zip",
+      "bytes": 10955832,
+      "sha256": "a523751a741c1c856a64b9f2ff27295f8a527445da3d9a886af02fb8d4d64b51"
+    },
+    {
+      "file": "documentos/TT10_MANUAL_VISUAL_FABRICACION_Y_ARMADO.pdf",
+      "bytes": 1898435,
+      "sha256": "1326f4b9feae5ee22676d995063e455aa37234b4cdd6870142ab5c29aa1f78c5"
+    }
+  ],
+  "counts": {
+    "hopperInstances": 996,
+    "horizontalInstances": 367,
+    "inclinedInstances": 747,
+    "referenceInstances": 1,
+    "totalInstances": 2111
+  }
+}

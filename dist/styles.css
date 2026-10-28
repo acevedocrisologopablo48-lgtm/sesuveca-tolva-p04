@@ -8,3 +8,6 @@
 #extra-view{font-size:10px;border:1px solid var(--line);border-radius:3px;background:white;max-width:104px;padding:6px;color:#617f93}button.active:hover:not(:disabled){background:var(--blue-deep);color:white}.formula-variables{margin-top:10px}.variable-row{display:flex;align-items:baseline;gap:9px;padding:6px 0;border-bottom:1px solid #edf2f5}.variable-row>code{display:inline-block;min-width:55px;padding:0!important;background:none!important;margin:0!important;color:#4b7791}.variable-row>span{flex:1;font-size:9px;line-height:1.6}.variable-row>strong{font-size:10px;font-weight:500;white-space:nowrap}.view-buttons{flex-wrap:wrap}@media(max-width:680px){#extra-view{font-size:9px;max-width:95px}.variable-row{flex-wrap:wrap}.variable-row>span{min-width:120px}}
 
 .check-tag.not-accepted{background:#fff0dc;color:#915a20}#documentos .commercial-grid{margin-top:20px}#documentos .commercial-card{padding:26px}
+
+.main-nav{flex-wrap:wrap}
+@media(max-width:680px){.main-nav{gap:0;justify-content:space-between}.nav-link{padding:9px 8px;min-height:36px}.main-nav .nav-icon{display:none}}

@@ -17,10 +17,10 @@ const turnDuration=60, dischargeStart=78, returnStart=81, cycleDuration=160;
 
 function toast(text){$('#toast').textContent=text;$('#toast').hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').hidden=true,3400);}
 function setTab(tab){
-  const valid=['simulacion','calculos','piezas','documentos'].includes(tab)?tab:'simulacion';
+  const valid=['planta','simulacion','calculos','piezas','documentos'].includes(tab)?tab:'planta';
   $$('.tab-panel').forEach(el=>el.hidden=el.id!==valid);
   $$('.nav-link').forEach(el=>{el.classList.toggle('active',el.dataset.tab===valid);el.setAttribute('aria-current',el.dataset.tab===valid?'page':'false');});
-  if(valid!=='simulacion')pause(); else requestAnimationFrame(resize);
+  if(valid!=='simulacion')pause(); else { if(data) ensure3D(); requestAnimationFrame(resize); }
 }
 window.addEventListener('hashchange',()=>setTab(location.hash.slice(1)));
 
@@ -49,6 +49,14 @@ function prepareGeometry(geometry){
   const smooth=toCreasedNormals(geometry,Math.PI/5),pos=smooth.attributes.position,normal=smooth.attributes.normal,uv=new Float32Array(pos.count*2);
   for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i),nx=Math.abs(normal.getX(i)),ny=Math.abs(normal.getY(i)),nz=Math.abs(normal.getZ(i));uv[i*2]=(nx>ny&&nx>nz?y:x)*.003;uv[i*2+1]=(nz>nx&&nz>ny?y:z)*.003;}
   smooth.setAttribute('uv',new THREE.BufferAttribute(uv,2));smooth.computeBoundingSphere();return smooth;
+}
+
+let threeInitPromise;
+function ensure3D(){
+  if(!threeInitPromise) threeInitPromise=init3D().catch(error=>{
+    console.error(error);$('#loading').innerHTML='<strong>No se pudo iniciar el visor de la tolva.</strong><span>Los documentos y las otras secciones siguen disponibles.</span>';
+  });
+  return threeInitPromise;
 }
 
 async function init3D(){
@@ -245,7 +253,7 @@ function wireEvents(){
 }
 
 async function start(){
-  try{const r=await fetch('data/project-c05.json?v=20261025');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderSummary();renderMetrics();calcOptions();renderCalc();renderDocuments();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));await init3D();}
+  try{const r=await fetch('data/project-c05.json?v=20261025');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderSummary();renderMetrics();calcOptions();renderCalc();renderDocuments();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));if(!$('#simulacion').hidden) await ensure3D();}
   catch(error){console.error(error);$('#loading').innerHTML='<strong>No se pudo iniciar el visor 3D.</strong><span>Comprueba que WebGL esté habilitado y recarga la página.</span><button onclick="location.reload()">Reintentar</button>';toast('Los datos del proyecto permanecen disponibles en sus pestañas.');}
 }
 start();

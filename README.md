@@ -13,3 +13,6 @@ Sincronización 25/10/2026: inventario PN_00_CARGA, geometría nativa y cálculo
 Simulación cinemática; el carbón es ilustrativo. Estado técnico: **NO LIBERADA PARA FABRICACIÓN**.
 
 Reconstrucción local de la publicación: `scripts/sincronizar_tt10_c05.py`. Tras guardar los documentos finales: `scripts/datos_actuales.py` sincroniza las descargas y construye el ZIP de nativos/referencias sin duplicar PDFs o archivos de respaldo. `scripts/verificar_cinematica.mjs` comprueba el ciclo y los conteos. Los scripts locales permanecen fuera de Git según `.gitignore`.
+
+
+Actualización 28/10/2026: vista inicial Planta R01, con las dos fajas S y la tolva. El visor TT10, sus cálculos, materiales y descargas se conservan. Los 2111 elementos corresponden a 996 instancias de tolva, 367 de horizontal, 747 de inclinada y una referencia de operarios. La referencia verde no es una pasarela estructural calculada.
