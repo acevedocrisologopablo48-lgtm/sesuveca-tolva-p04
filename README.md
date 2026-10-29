@@ -1,18 +1,18 @@
-# SESUVECA · Tolva trompo TT10
+# SESUVECA · Planta de selección de carbón R03
 
-Web: https://acevedocrisologopablo48-lgtm.github.io/sesuveca-tolva-p04/
+Web: https://acevedocrisologopablo48-lgtm.github.io/sesuveca-tolva-p04/#planta
 
-Modelo activo: `TT10_C05_CONJUNTO.SLDASM`, revisión interna C06. El visor contiene **492 códigos y 996 instancias**. Incluye las 16 piezas revisadas del bloqueo y el paso de cadena de la plataforma; las piezas suprimidas ya no aparecen.
+Actualización: 29/10/2026. Modelo activo: `PLANTA_SELECCION_CARBON_R03_CIERRE.SLDASM`, con 2.174 componentes y 473 geometrías exportadas desde SolidWorks. Incluye la disposición R02, plataforma, escalera, canaleta y accionamiento 318M R03.
 
-Documentos: **102 planos A4 horizontales** en PDF y nativos con sus referencias, BOM Excel/PDF, informe de cálculo, STEP y **151 perfiles DXF**. El manifiesto `dist/data/documentos.json` registra los archivos publicados, sus hashes, páginas y formatos reales.
+El visor reproduce las configuraciones nativas 0°, 35° y 70° con error inferior a 0,001 mm. `plant-motion.js` comparte la cinemática entre el visor y las pruebas locales. La secuencia visual acelerada libera pasadores, abate la canaleta, gira y retorna. La extracción intermedia de 60 mm de los pasadores cautivos es una hipótesis visual; no representa un actuador diseñado. Los componentes comerciales e interiores de transmisión están simplificados.
 
 Servir `dist/` por HTTP. GitHub Actions publica esa carpeta al actualizar `main`.
 
-Sincronización 25/10/2026: inventario PN_00_CARGA, geometría nativa y cálculos vigentes. Masa disponible 17.378,657 kg; 83 códigos con masa n/d. Modelo de parada con dos frenos: 1,298 s nominales y 2,015 s al dividir la capacidad por FS 1,5. Son resultados del modelo con las hipótesis indicadas.
+**Verificación no aprobada para la canaleta.** El barrido de superficies registró 127 pares de contacto, que incluyen contactos nominales. Siete ejemplos de penetración volumétrica se confirmaron con OCP. No se declara el conjunto libre de interferencias o desconexiones mecánicas ni liberado para fabricación. La comprobación anterior de 69 componentes del accionamiento, sin solapes superiores a 1 mm³, tiene un alcance distinto.
 
-Simulación cinemática; el carbón es ilustrativo. Estado técnico: **NO LIBERADA PARA FABRICACIÓN**.
+La memoria R03 y la evidencia están en `dist/documentos/`. El informe `VERIFICACION_WEB_R03.html` identifica resultados, pares y limitaciones; el JSON conserva la trazabilidad al SHA-256 del CAD. El resaltado del visor indica piezas de canaleta incluidas en pares de contacto, sin afirmar que cada par sea una penetración.
 
-Reconstrucción local de la publicación: `scripts/sincronizar_tt10_c05.py`. Tras guardar los documentos finales: `scripts/datos_actuales.py` sincroniza las descargas y construye el ZIP de nativos/referencias sin duplicar PDFs o archivos de respaldo. `scripts/verificar_cinematica.mjs` comprueba el ciclo y los conteos. Los scripts locales permanecen fuera de Git según `.gitignore`.
+Las secciones Tolva, Cálculos y Piezas C05/C06 y las descargas R01 se conservan como **históricas**, anteriores al accionamiento 318M.
 
 
-Actualización 28/10/2026: vista inicial Planta R01, con las dos fajas S y la tolva. El visor TT10, sus cálculos, materiales y descargas se conservan. Los 2111 elementos corresponden a 996 instancias de tolva, 367 de horizontal, 747 de inclinada y una referencia de operarios. La referencia verde no es una pasarela estructural calculada.
+Validación local: sintaxis JavaScript, rutas e IDs HTML, coincidencia de transformaciones, continuidad e interbloqueo de la secuencia, inicialización y controles en jsdom con escena Three.js sin GPU. No se realizó inspección visual en navegador: su control está deshabilitado en Work. Scripts de exportación y verificación en la carpeta local `PLANTA SELECCION CARBON/07_FUENTES/R03_ACCIONAMIENTO/web_qa`.

@@ -1,0 +1,1414 @@
+{
+  "revision": "R03",
+  "date": "2026-10-29",
+  "status": "NOT_CLEARED_CHUTE_INTERFERENCES",
+  "source_file": "PLANTA_SELECCION_CARBON_R03_CIERRE.SLDASM",
+  "source_sha256": "f0a83bbcb9d426ae4944c91f6ca714c85e3ef1b02e04094cb5df9f34915f2850",
+  "instances": 2174,
+  "parts": 473,
+  "native_configurations": [
+    "PLANTA_COMPLETA_R03",
+    "GIRO_35_R03",
+    "GIRO_70_R03"
+  ],
+  "native_pose_max_vertex_error_mm": 5.084229945850415E-13,
+  "sampling": {
+    "hopper_angles_deg": {
+      "from": 0,
+      "to": 70,
+      "step": 0.5
+    },
+    "sequence_sample_seconds": 0.125,
+    "total_samples": 231,
+    "broadphase_pairs": 33220,
+    "triangle_tests": 24294
+  },
+  "surface_pair_counts": {
+    "tolva_movil/tolva_fija": 12,
+    "canaleta/canaleta": 80,
+    "canaleta/horizontal": 35
+  },
+  "surface_contacts": [
+    {
+      "a": "tolva_movil/C05E_TT10_COLLAR_P-1",
+      "b": "tolva_fija/C05E_TT10_22240_P-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_COLLAR_P-1",
+      "b": "tolva_fija/C05E_TT10_TNF_P2-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_COLLAR_N-1",
+      "b": "tolva_fija/C05E_TT10_22240_N-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_COLLAR_N-1",
+      "b": "tolva_fija/C05E_TT10_TNF_N1-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_M086-1",
+      "b": "tolva_fija/C05E_TT10_22240_N-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_M086-1",
+      "b": "tolva_fija/C05E_TT10_TNF_N2-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/R03_MUNON_P_D200_EXTENDIDO-1",
+      "b": "tolva_fija/C05E_TT10_22240_P-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/R03_MUNON_P_D200_EXTENDIDO-1",
+      "b": "tolva_fija/C05E_TT10_TNF_P1-1",
+      "first": "giro 0°",
+      "samples": 231,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-1",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-3",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-2",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-6",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-5",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-3",
+      "first": "giro 0°",
+      "samples": 17,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-1",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-1",
+      "first": "giro 0°",
+      "samples": 7,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-3",
+      "first": "giro 0°",
+      "samples": 35,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-1",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-1",
+      "first": "giro 0°",
+      "samples": 25,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-3",
+      "first": "giro 0°",
+      "samples": 41,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-4",
+      "b": "canaleta/R02_RHS_40x40x3_L205-2",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-10",
+      "b": "canaleta/R02_RHS_40x40x3_L205-4",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-12",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-9",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-8",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-11",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-7",
+      "b": "canaleta/R02_RHS_40x40x3_L205-3",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-4",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-6",
+      "first": "giro 0°",
+      "samples": 41,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-2",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-6",
+      "first": "giro 0°",
+      "samples": 17,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-2",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-2",
+      "first": "giro 0°",
+      "samples": 7,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-2",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-6",
+      "first": "giro 0°",
+      "samples": 35,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-2",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-2",
+      "first": "giro 0°",
+      "samples": 25,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-14",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-15",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-18",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-17",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-13",
+      "b": "canaleta/R02_RHS_40x40x3_L205-5",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-16",
+      "b": "canaleta/R02_RHS_40x40x3_L205-6",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-7",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-9",
+      "first": "giro 0°",
+      "samples": 41,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-7",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-6",
+      "first": "giro 0°",
+      "samples": 27,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-3",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-9",
+      "first": "giro 0°",
+      "samples": 17,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-3",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-3",
+      "first": "giro 0°",
+      "samples": 7,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-3",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-9",
+      "first": "giro 0°",
+      "samples": 35,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-3",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-3",
+      "first": "giro 0°",
+      "samples": 25,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-19",
+      "b": "canaleta/R02_RHS_40x40x3_L205-7",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-21",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-20",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-24",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-23",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-22",
+      "b": "canaleta/R02_RHS_40x40x3_L205-8",
+      "first": "giro 0°",
+      "samples": 91,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-10",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-12",
+      "first": "giro 0°",
+      "samples": 41,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-10",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-8",
+      "first": "giro 0°",
+      "samples": 27,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-4",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-12",
+      "first": "giro 0°",
+      "samples": 17,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-4",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-4",
+      "first": "giro 0°",
+      "samples": 7,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-4",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-12",
+      "first": "giro 0°",
+      "samples": 35,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-4",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-4",
+      "first": "giro 0°",
+      "samples": 25,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_M151-1",
+      "b": "tolva_fija/C05E_TT10_F596-1",
+      "first": "giro 70°",
+      "samples": 1,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_M121-1",
+      "b": "tolva_fija/C05E_TT10_F426-1",
+      "first": "giro 70°",
+      "samples": 1,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_M276-1",
+      "b": "tolva_fija/C05E_TT10_PE_PIN-1",
+      "first": "secuencia 0s",
+      "samples": 12,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "tolva_movil/C05E_TT10_M351-1",
+      "b": "tolva_fija/C05E_TT10_PE_PIN-2",
+      "first": "secuencia 0s",
+      "samples": 12,
+      "groups": [
+        "tolva_movil",
+        "tolva_fija"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-1",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-9",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-1",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-7",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-1",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-9",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-2",
+      "first": "secuencia 0s",
+      "samples": 84,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-1",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-1",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-2",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-9",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-6",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-7",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-8",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-19",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-23",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-2",
+      "first": "secuencia 0s",
+      "samples": 24,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-1",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-1",
+      "first": "secuencia 0s",
+      "samples": 58,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-2",
+      "first": "secuencia 0s",
+      "samples": 50,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_RHS_40x40x3_L205-3",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-2",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-4",
+      "first": "secuencia 0s",
+      "samples": 84,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "canaleta/R02_RHS_40x40x3_L205-4",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-3",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-17",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-5",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-2",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-8",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-4",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-5",
+      "first": "secuencia 0s",
+      "samples": 50,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-4",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-3",
+      "first": "secuencia 0s",
+      "samples": 58,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-2",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-5",
+      "first": "secuencia 0s",
+      "samples": 24,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-3",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-6",
+      "first": "secuencia 0s",
+      "samples": 84,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_RHS_40x40x3_L205-6",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "canaleta/R02_RHS_40x40x3_L205-5",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-15",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-3",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-4",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-7",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-8",
+      "first": "secuencia 0s",
+      "samples": 50,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-7",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-5",
+      "first": "secuencia 0s",
+      "samples": 58,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-3",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-8",
+      "first": "secuencia 0s",
+      "samples": 24,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-8",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-5",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-19",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-2",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-19",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-14",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-4",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_RHS_40x40x3_L205-8",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-8",
+      "first": "secuencia 0s",
+      "samples": 84,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "canaleta/R02_RHS_40x40x3_L205-7",
+      "first": "secuencia 0s",
+      "samples": 86,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-1",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-2",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-5",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-4",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-14",
+      "first": "secuencia 0s",
+      "samples": 82,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-22",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-5",
+      "first": "secuencia 0s",
+      "samples": 90,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-10",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-11",
+      "first": "secuencia 0s",
+      "samples": 50,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-10",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-7",
+      "first": "secuencia 0s",
+      "samples": 58,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-4",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-11",
+      "first": "secuencia 0s",
+      "samples": 24,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-1",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-1",
+      "first": "secuencia 1.25s",
+      "samples": 12,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-2",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-3",
+      "first": "secuencia 1.25s",
+      "samples": 12,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-3",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-5",
+      "first": "secuencia 1.25s",
+      "samples": 12,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-4",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-7",
+      "first": "secuencia 1.25s",
+      "samples": 12,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-1",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-1",
+      "b": "horizontal/TRANSICION_CABEZA_REV_K_B600p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 65,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-2",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-4",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-3",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-6",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-5",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-7",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-8",
+      "b": "horizontal/BANDA_ARTESA_REV_K_B600p00_L4415p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 36,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CANALETA_LATERAL_e4_H80-8",
+      "b": "horizontal/TRANSICION_COLA_REV_K_B600p00_LOCAL_S-1",
+      "first": "secuencia 2.125s",
+      "samples": 65,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-1",
+      "b": "horizontal/SOPORTE_ARTESA_EMPERNADO_W750p00_F200p00_REV_K_LOCAL_S-8",
+      "first": "secuencia 2.75s",
+      "samples": 42,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_PASADOR_CAUTIVO_M16_L70-1",
+      "b": "horizontal/SUPERIOR_D76p2_F200p00_G12p50_PL17p8_REV_K_LOCAL_S-19",
+      "first": "secuencia 3s",
+      "samples": 44,
+      "groups": [
+        "canaleta",
+        "horizontal"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-4",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-4",
+      "first": "secuencia 3.5s",
+      "samples": 26,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    },
+    {
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-1",
+      "b": "canaleta/R02_TOPE_0_120_60x60x10-2",
+      "first": "secuencia 3.625s",
+      "samples": 25,
+      "groups": [
+        "canaleta",
+        "canaleta"
+      ]
+    }
+  ],
+  "positive_volume_examples": [
+    {
+      "configuration": "PLANTA_COMPLETA_R03",
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-3",
+      "common_volume_mm3": 4315.834763720986,
+      "positive_volume": true
+    },
+    {
+      "configuration": "PLANTA_COMPLETA_R03",
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-1",
+      "common_volume_mm3": 6599.999999999996,
+      "positive_volume": true
+    },
+    {
+      "configuration": "PLANTA_COMPLETA_R03",
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-1",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-1",
+      "common_volume_mm3": 0.0,
+      "positive_volume": false
+    },
+    {
+      "configuration": "PLANTA_COMPLETA_R03",
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-3",
+      "common_volume_mm3": 0.0,
+      "positive_volume": false
+    },
+    {
+      "configuration": "PLANTA_COMPLETA_R03",
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-1",
+      "common_volume_mm3": 1932.8645518234316,
+      "positive_volume": true
+    },
+    {
+      "configuration": "GIRO_35_R03",
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-3",
+      "common_volume_mm3": 25.341046371298155,
+      "positive_volume": true
+    },
+    {
+      "configuration": "GIRO_35_R03",
+      "a": "canaleta/R02_BISAGRA_OREJA_100x130_e10_D25-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-1",
+      "common_volume_mm3": 957.5128869403619,
+      "positive_volume": true
+    },
+    {
+      "configuration": "GIRO_35_R03",
+      "a": "canaleta/R02_BANDERA_SENSOR_30x20x3-1",
+      "b": "canaleta/R02_SENSOR_POSICION_40x25x15_REPR-1",
+      "common_volume_mm3": 599.9999999999933,
+      "positive_volume": true
+    },
+    {
+      "configuration": "GIRO_35_R03",
+      "a": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-1",
+      "b": "canaleta/R02_CIERRE_POSITIVO_OREJA_e10_D18-3",
+      "common_volume_mm3": 3696.1940481263828,
+      "positive_volume": true
+    },
+    {
+      "configuration": "GIRO_35_R03",
+      "a": "canaleta/R02_CANALETA_FONDO_e4_MOD1103p75-1",
+      "b": "canaleta/R02_RHS_40x40x3_L205-1",
+      "common_volume_mm3": 0.0,
+      "positive_volume": false
+    }
+  ],
+  "previous_drive_check": {
+    "components": 69,
+    "interference_volume_threshold_mm3": 1,
+    "interferences": 0,
+    "scope": "R03 source geometry, stationary installed pose; separate previously completed OCP solid verification"
+  },
+  "floor_clearance_mm": 127.568656986,
+  "floor_method": "Previous continuous swept-geometry calculation R03; transformed AABBs are not used as true surface clearance.",
+  "connection_scope": "Native component transforms reproduced at 0,35,70; rigid hopper/chute rotations around fixed Y axes; slides preserve their axes. This is not a complete physical joint, tooth or bearing verification.",
+  "chute_captive_pin_intermediate_motion": "Visual hypothesis: 60 mm axial withdrawal before folding; native end states retained. Actuator and retention details not designed.",
+  "scope_limits": [
+    "Surface intersections include intentional nominal contacts; 127 pairs are not 127 confirmed penetrations.",
+    "7 selected OCP examples show positive common volume above 1 mm3.",
+    "Sampled surface test cannot exclude containment or interference between samples.",
+    "Internal commercial transmission and bearing details are simplified.",
+    "No full fabrication release.",
+    "Browser visual QA unavailable: browser control disabled in Work settings."
+  ],
+  "cad_modified_for_web": false,
+  "ui_validation": {
+    "date": "2026-10-29",
+    "passed": true,
+    "native_pose_matrix_max_error_mm": 4.547473508864641E-13,
+    "instances": 2174,
+    "tests": [
+      "unique HTML IDs and local assets",
+      "native configurations 0,35,70 match",
+      "1281 continuous sequence samples",
+      "no hopper rotation before chute retraction",
+      "locking pins released during fold",
+      "initialization with native data",
+      "all view buttons",
+      "manual angle controls",
+      "play/pause/resume/end/reset",
+      "reserved equipment visibility",
+      "incident highlighting"
+    ],
+    "scope": "Actual viewer logic executed in jsdom with CPU THREE scene; WebGL renderer replaced in-memory. No browser rendering/visual QA; local browser control disabled."
+  }
+}

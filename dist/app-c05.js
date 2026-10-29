@@ -200,7 +200,7 @@ function animate(now){requestAnimationFrame(animate);const dt=Math.min(.1,(now-l
 function renderSummary(){
   const s=data.summary;
   const counts=$$('.parts-summary strong');counts[0].textContent=nf(s.instanceCount,0);counts[1].textContent=nf(s.uniquePartCodes,0);counts[2].innerHTML=nf(s.totalMassKg,0)+' <small>kg</small>';
-  $('.parts-summary p').textContent=s.massScope+' Clic en una pieza para verla en el modelo.';
+  $('.parts-summary p').textContent='BOM histórica C05/C06, anterior al accionamiento 318M. '+s.massScope+' Clic en una pieza para verla en el modelo histórico. Diseño actual y memoria R03 en Planta.';
   $('[data-calc-tab="results"] span').textContent=data.calculations.length;
   $('[data-calc-tab="checks"] span').textContent=data.checks.length;
   const v=$('#volume-value');if(v)v.innerHTML=nf(s.usefulVolumeM3,3)+' <small>m³</small>';
@@ -210,7 +210,7 @@ function renderMetrics(){
   $('#calculation-metrics').innerHTML=cards.map(([title,v,unit,note])=>`<div class="metric-card"><span>${title}</span><strong>${v}<small>${unit}</small></strong><p>${note}</p></div>`).join('');
 }
 async function renderDocuments(){
-  try{const r=await fetch('data/documentos.json?v=20261025');if(!r.ok)return;const d=await r.json(),plans=d.files.find(x=>x.name==='TT10_PLANOS_CONJUNTOS.pdf');if(plans){const size=(plans.page_sizes_mm||[]).map(([w,h])=>Math.abs(w-297)<1&&Math.abs(h-210)<1?'A4 horizontal':`${nf(w,0)} × ${nf(h,0)} mm`).join(' / ');$('#plans-meta').textContent=`${plans.pages} láminas · ${size} · revisión disponible para descarga`;}}catch{}
+  try{const r=await fetch('data/documentos.json?v=20261025');if(!r.ok)return;const d=await r.json(),plans=d.files.find(x=>x.name==='TT10_PLANOS_CONJUNTOS.pdf');if(plans){const size=(plans.page_sizes_mm||[]).map(([w,h])=>Math.abs(w-297)<1&&Math.abs(h-210)<1?'A4 horizontal':`${nf(w,0)} × ${nf(h,0)} mm`).join(' / ');$('#plans-meta').textContent=`${plans.pages} láminas · ${size} · planos históricos C05/C06, anteriores al accionamiento 318M`;}}catch{}
 }
 function calcOptions(){const rows=calcTab==='checks'?data.checks:data.calculations;const values=[...new Set(rows.map(r=>r.category))].sort();$('#calc-category').innerHTML='<option value="">Todos los temas</option>'+values.map(v=>`<option>${escape(v)}</option>`).join('');}
 function displayNumeric(d){if(!d)return '—';return d.value==null?'n/d':typeof d.value==='number'?nf(d.value,Math.abs(d.value)>=10000?0:2)+' <span class="cell-subtitle" style="display:inline">'+escape(d.unit)+'</span>':escape(d.value)+' '+escape(d.unit);}
@@ -256,4 +256,6 @@ async function start(){
   try{const r=await fetch('data/project-c05.json?v=20261025');if(!r.ok)throw new Error('No se pueden cargar los datos');data=await r.json();renderSummary();renderMetrics();calcOptions();renderCalc();renderDocuments();$('#parts-category').innerHTML='<option value="">Todos los conjuntos</option>'+[...new Set(data.parts.map(p=>p.category))].sort().map(c=>`<option>${escape(c)}</option>`).join('');renderParts();wireEvents();setTab(location.hash.slice(1));if(!$('#simulacion').hidden) await ensure3D();}
   catch(error){console.error(error);$('#loading').innerHTML='<strong>No se pudo iniciar el visor 3D.</strong><span>Comprueba que WebGL esté habilitado y recarga la página.</span><button onclick="location.reload()">Reintentar</button>';toast('Los datos del proyecto permanecen disponibles en sus pestañas.');}
 }
+// Navigation remains available even if the historical dataset cannot load.
+setTab(location.hash.slice(1));
 start();

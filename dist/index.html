@@ -8,14 +8,14 @@
   <link rel="icon" href="assets/sesuveca-logo.png" id="favicon">
   <link rel="stylesheet" href="styles.css?v=20261028">
   <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.js"}}</script>
-  <link rel="stylesheet" href="planta.css?v=20261028-R01">
+  <link rel="stylesheet" href="planta.css?v=20261029-R03">
 </head>
 <body>
   <header class="header">
     <a class="brand" href="#planta" aria-label="SESUVECA, inicio"><img src="assets/sesuveca-logo.png" id="brand-logo" alt="SESUVECA"></a>
     <div class="project-heading"><span class="eyebrow">INGENIERÍA · CONJUNTO DE PLANTA</span><h1>SELECCIÓN DE CARBÓN</h1></div>
     <nav class="main-nav" aria-label="Secciones del proyecto">
-      <a href="#planta" class="nav-link active" data-tab="planta"><span class="nav-icon">▱</span> Planta</a>
+      <a href="#planta" class="nav-link active" data-tab="planta"><span class="nav-icon">▱</span> Planta R03</a>
       <a href="#simulacion" class="nav-link" data-tab="simulacion"><span class="nav-icon">◈</span> Tolva</a>
       <a href="#calculos" class="nav-link" data-tab="calculos"><span class="nav-icon">∑</span> Cálculos</a>
       <a href="#piezas" class="nav-link" data-tab="piezas"><span class="nav-icon">▦</span> Piezas</a>
@@ -27,7 +27,7 @@
 <section id="planta" class="tab-panel" hidden>
   <div class="planta-intro">
     <div><span class="planta-kicker">SELECCIÓN DE CARBÓN · IMPLANTACIÓN GENERAL</span><h2>Planta de selección</h2></div>
-    <span class="planta-revision" id="planta-revision">IMPLANTACIÓN R01 · 28/10/2026</span>
+    <span class="planta-revision" id="planta-revision">R03 · 29/10/2026</span>
   </div>
   <div class="planta-workspace">
     <div class="planta-viewer-column">
@@ -35,7 +35,7 @@
         <div class="planta-views" role="group" aria-label="Vistas de la planta">
           <button class="active" data-planta-view="iso" aria-pressed="true" data-planta-requires-model disabled>Isométrica</button>
           <button data-planta-view="selection" aria-pressed="false" data-planta-requires-model disabled>Selección</button>
-          <button data-planta-view="top" aria-pressed="false" data-planta-requires-model disabled>Planta</button>
+          <button data-planta-view="drive" aria-pressed="false" data-planta-requires-model disabled>Accionamiento</button><button data-planta-view="chute" aria-pressed="false" data-planta-requires-model disabled>Canaleta</button><button data-planta-view="top" aria-pressed="false" data-planta-requires-model disabled>Planta</button>
           <button data-planta-view="profile" aria-pressed="false" data-planta-requires-model disabled>Perfil longitudinal</button>
           <button data-planta-view="front" aria-pressed="false" data-planta-requires-model disabled>Frontal</button>
         </div>
@@ -46,54 +46,65 @@
       </div>
       <div class="planta-viewport" id="planta-viewport" tabindex="0" aria-label="Visor de la planta. Flechas izquierda y derecha: ángulo; espacio: reproducir o pausar; F: centrar; A: aristas.">
         <div id="planta-scene"></div>
-        <div class="planta-canvas-label"><span id="planta-view-label">PLANTA R01 / ISOMÉTRICA</span><span class="planta-axis-note">CAD EN mm · Z VERTICAL</span></div>
+        <div class="planta-canvas-label"><span id="planta-view-label">PLANTA R03 / ISOMÉTRICA</span><span class="planta-axis-note">CAD EN mm · Z VERTICAL</span></div>
         <div class="planta-flow-legend" id="planta-flow-legend" hidden><span><i></i> ACEPTADOS · por fajas hacia −Y</span><span class="rejected"><i></i> RECHAZOS · tolva y descarga lateral +X</span></div>
         <div class="planta-loading" id="planta-loading" role="status"><span class="planta-spinner" aria-hidden="true"></span><strong>Preparando la planta 3D</strong><span id="planta-loading-detail">Fajas, tolva y reserva de operarios</span></div>
         <div class="planta-error" id="planta-error" role="alert" hidden><strong>No se pudo cargar la planta</strong><p id="planta-error-message"></p><button id="planta-retry">Volver a intentar</button></div>
         <div class="planta-viewport-bottom"><p>Arrastrar: girar · Rueda: acercar<br>Botón derecho o Mayús + arrastrar: desplazar</p><button id="planta-fit" title="Centrar y encuadrar la vista actual" data-planta-requires-model disabled>↺ Centrar</button></div>
       </div>
-      <div class="planta-model-key"><span><strong>GEOMETRÍA DE ORIGEN</strong> · <span id="planta-counts">996 tolva · 367 horizontal · 747 inclinada</span></span><span>Tolva C05 / C06 · fajas S</span></div>
+      <div class="planta-model-key"><span><strong>GEOMETRÍA DE ORIGEN</strong> · <span id="planta-counts">2.174 componentes · 473 geometrías</span></span><span>Ensamble SolidWorks R03</span></div>
     </div>
     <aside class="planta-panel" aria-label="Control y referencias de la planta">
       <div class="planta-panel-heading"><span>TOLVA TROMPO</span><span class="planta-status" id="planta-run-status">EN REPOSO</span></div>
       <div class="planta-panel-block">
-        <h3>Giro de la tolva</h3><p>Explora el basculamiento con las fajas en su posición de implantación.</p>
+        <h3>Giro de la tolva</h3><p>Secuencia de liberación, retiro de canaleta, giro y retorno.</p>
         <div class="planta-angle-readout"><div><span class="planta-field">ÁNGULO DE GIRO</span><strong><span id="planta-angle-value">0</span><small>°</small></strong></div><span class="planta-pose" id="planta-pose">Carga</span></div>
         <label class="planta-sr-only" for="planta-angle">Ángulo de la tolva, de cero a setenta grados</label><input id="planta-angle" type="range" min="0" max="70" step="0.1" value="0" aria-valuetext="0 grados" data-planta-requires-model disabled>
         <div class="planta-range-labels"><span>0° · Carga</span><span>70° · Descarga</span></div>
         <div class="planta-pose-buttons" role="group" aria-label="Posiciones de la tolva"><button class="active" data-planta-angle="0" aria-pressed="true" data-planta-requires-model disabled>0°</button><button data-planta-angle="35" aria-pressed="false" data-planta-requires-model disabled>35°</button><button data-planta-angle="70" aria-pressed="false" data-planta-requires-model disabled>70°</button></div>
-        <div class="planta-play-controls"><button class="planta-primary" id="planta-play" disabled>▶ Reproducir giro</button><button id="planta-pause" aria-label="Pausar giro" title="Pausar giro" disabled>Ⅱ</button><button id="planta-reset" aria-label="Volver a cero grados" title="Volver a cero grados" data-planta-requires-model disabled>↺</button></div>
-        <p class="planta-motion-note" id="planta-motion-note">Recorrido visual de ida y vuelta. La reproducción no representa tiempos ni dinámica del material.</p>
+        <div class="planta-play-controls"><button class="planta-primary" id="planta-play" disabled>▶ Reproducir secuencia</button><button id="planta-pause" aria-label="Pausar giro" title="Pausar giro" disabled>Ⅱ</button><button id="planta-reset" aria-label="Volver a cero grados" title="Volver a cero grados" data-planta-requires-model disabled>↺</button></div>
+        <p id="planta-phase" role="status">Carga · bloqueada</p><p class="planta-motion-note" id="planta-motion-note">Secuencia visual acelerada de 32 s. No simula carga, esfuerzos ni material. La canaleta conserva incidencias del CAD; verificación inferior.</p>
       </div>
       <div class="planta-panel-block planta-display-block">
-        <h3>Capas del visor</h3>
-        <label class="planta-switch-row"><span>Reserva de operarios</span><input id="planta-reference" type="checkbox" checked data-planta-requires-model disabled></label>
+        <h3>Capas del visor</h3><label class="planta-switch-row"><span>Resaltar incidencias de canaleta</span><input id="planta-incidents" type="checkbox" data-planta-requires-model disabled></label>
+        <label class="planta-switch-row"><span>Reserva de enfriador</span><input id="planta-reference" type="checkbox" data-planta-requires-model disabled></label>
         <label class="planta-switch-row"><span>Flujos ilustrativos</span><input id="planta-flow" type="checkbox" data-planta-requires-model disabled></label>
-        <p class="planta-reserve-note">La superficie verde reserva espacio para la plataforma; su estructura queda por desarrollar. Las flechas muestran direcciones de proceso.</p>
+        <p class="planta-reserve-note">La plataforma y la escalera son geometría R02. El volumen del enfriador es solo una reserva de espacio, oculta al inicio. Las flechas son ilustrativas.</p>
       </div>
       <div class="planta-panel-block planta-clearance-block">
         <h3>Referencias de implantación</h3>
         <dl class="planta-facts">
-          <div class="planta-clearance-fact"><dt>Holgura vertical sobre<br>el giro máximo de tolva</dt><dd id="planta-clearance">200 mm</dd></div>
-          <div><dt>Centro de banda horizontal</dt><dd id="planta-belt-height">5.146,6 mm</dd></div>
-          <div><dt>Referencia de plataforma</dt><dd id="planta-platform-height">4.146,6 mm</dd></div>
-          <div><dt>Máximo del barrido de tolva</dt><dd id="planta-sweep-height">4.363,5 mm</dd></div>
-          <div><dt>Inclinación de faja</dt><dd id="planta-inclination">19,2°</dd></div>
+          <div class="planta-clearance-fact"><dt>Holgura mínima de tolva<br>sobre el piso</dt><dd id="planta-clearance">127,57 mm</dd></div>
+          <div><dt>Altura del eje de tolva</dt><dd id="planta-belt-height">1.950 mm</dd></div>
+          <div><dt>Piso de plataforma</dt><dd id="planta-platform-height">1.583,1 mm</dd></div>
+          <div><dt>Recorrido de basculamiento</dt><dd id="planta-sweep-height">0° — 70°</dd></div>
+          <div><dt>Accionamiento</dt><dd id="planta-inclination">318M · FS 1,75</dd></div>
         </dl>
       </div>
-      <div class="planta-panel-foot"><strong id="planta-status">Implantación para revisión</strong><p>Conjunto R01 con los equipos de origen. Selección y aporte a la tolva en 0°. Durante el giro, interrumpir el aporte de rechazos.</p></div>
+      <div class="planta-panel-foot"><strong id="planta-status">Canaleta: interferencias detectadas</strong><p>Conjunto R01 con los equipos de origen. Selección y aporte a la tolva en 0°. Durante el giro, interrumpir el aporte de rechazos.</p></div>
     </aside>
   </div>
+  <section class="planta-verification" aria-labelledby="verification-title">
+    <h3 id="verification-title">Verificación de geometría y movimiento</h3>
+    <div class="verification-grid">
+      <article><strong>Geometría sincronizada</strong><p>2.174 componentes exportados del ensamble R03 guardado. Las posiciones 0°, 35° y 70° coinciden con SolidWorks con error inferior a 0,001 mm.</p></article>
+      <article><strong>Accionamiento 318M</strong><p>69 componentes examinados en la comprobación volumétrica previa: sin solapes superiores a 1 mm³. Eje, acople y carcasa conservan su posición coaxial.</p></article>
+      <article><strong>Giro de la tolva</strong><p>Barrido de 0° a 70° cada 0,5°. Sin cruces de superficies con fajas, plataforma ni accionamiento en esas muestras. Holgura continua al piso: 127,57 mm según la memoria R03.</p></article>
+      <article class="verification-warning"><strong>Canaleta: revisión no aprobada</strong><p>La comprobación confirma penetraciones entre el fondo y las bisagras, entre orejas y soportes, y en el cierre retirado. También aparecen contactos con la faja horizontal. El detalle descargable identifica los pares.</p></article>
+    </div>
+    <p>El movimiento mantiene unidos los grupos rígidos y sus ejes. Los pasadores se retiran antes de abatir la canaleta. El recorrido intermedio de sus pasadores cautivos es una hipótesis visual de 60 mm; no corresponde a un mecanismo de actuación diseñado.</p>
+    <p>La geometría comercial simplifica interiores, dientes y rodamientos; la animación muestra las carcasas de transmisión inmóviles. La comprobación de superficies por muestras no equivale a una certificación continua ni a una validación de fabricación. La memoria R03 y sus condiciones de aprobación siguen vigentes, con las incidencias adicionales de esta revisión.</p>
+  </section>
   <div class="planta-delivery">
-    <div><strong>Planta de selección de carbón · R01</strong><p>Implantación, modelo de intercambio y paquete de documentación.</p></div>
-    <div class="planta-downloads" aria-label="Descargas de la planta R01"><a href="documentos/PLANTA_SELECCION_CARBON_IMPLANTACION_R01.pdf" download>↓ Implantación PDF</a><a href="documentos/PLANTA_SELECCION_CARBON_R01.step" download>↓ Modelo STEP</a><a href="documentos/PLANTA_SELECCION_CARBON_R01.zip" download>↓ Paquete ZIP</a></div>
+    <div><strong>Planta de selección de carbón · R03</strong><p>Memoria consolidada y evidencia de la comprobación del modelo web.</p></div>
+    <div class="planta-downloads" aria-label="Descargas R03"><a href="documentos/MEMORIA_ACCIONAMIENTO_TOLVA_10T_R03.pdf" download>↓ Memoria R03 PDF</a><a href="documentos/VERIFICACION_WEB_R03.html">Ver comprobación</a><a href="documentos/VERIFICACION_WEB_R03.json" download>↓ Evidencia JSON</a></div>
   </div>
   <p class="planta-sr-only" id="planta-live" role="status" aria-live="polite"></p>
 </section>
 
 
-    <section id="simulacion" class="tab-panel" hidden>
-      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>Conjunto 3D</h2></div><span class="quiet-tag"><i></i> CAD C05 / C06 · 25/10/2026</span></div>
+    <section id="simulacion" class="tab-panel" hidden><p class="historical-note">Versión anterior al accionamiento 318M. <a href="#planta">Diseño actual y memoria R03 en Planta →</a></p>
+      <div class="section-intro"><div><span class="section-kicker">EXPLORADOR DEL CONJUNTO</span><h2>Tolva histórica C05/C06</h2></div><span class="quiet-tag"><i></i> CAD C05 / C06 · 25/10/2026</span></div>
       <div class="workspace">
         <div class="viewer-column">
           <div class="toolbar">
@@ -137,8 +148,8 @@
       <div class="capacity-strip"><span class="info-icon">i</span><p><strong>Tolva trompo · 10 t.</strong> Simulación cinemática. Documentación para revisión; liberación de fabricación no emitida.</p><a href="#documentos">Descargas →</a></div>
     </section>
 
-    <section id="calculos" class="tab-panel" hidden>
-      <div class="section-intro"><div><span class="section-kicker">MEMORIA DE INGENIERÍA</span><h2>Cálculos</h2></div><span class="quiet-tag">TT10</span></div>
+    <section id="calculos" class="tab-panel" hidden><p class="historical-note">Versión anterior al accionamiento 318M. <a href="#planta">Diseño actual y memoria R03 en Planta →</a></p>
+      <div class="section-intro"><div><span class="section-kicker">MEMORIA DE INGENIERÍA</span><h2>Cálculos históricos C05/C06</h2></div><span class="quiet-tag">TT10</span></div>
       <div class="metric-grid" id="calculation-metrics"></div>
       <div class="content-card">
         <div class="card-tabs" role="tablist" aria-label="Información técnica"><button class="active" data-calc-tab="results" role="tab" aria-selected="true">Resultados <span>21</span></button><button data-calc-tab="checks" role="tab" aria-selected="false">Comprobaciones <span>7</span></button><button data-calc-tab="commercial" role="tab" aria-selected="false">Componentes comerciales</button></div>
@@ -148,21 +159,21 @@
       <div class="technical-note"><span class="info-icon">i</span><p><a href="registro-revision.html">Datos del proyecto →</a></p></div>
     </section>
 
-    <section id="piezas" class="tab-panel" hidden>
-      <div class="section-intro"><div><span class="section-kicker">LISTA DE MATERIALES</span><h2>Piezas y materiales</h2></div><button id="download-parts" class="outline-button">↓ Exportar lista CSV</button></div>
+    <section id="piezas" class="tab-panel" hidden><p class="historical-note">Versión anterior al accionamiento 318M. <a href="#planta">Diseño actual y memoria R03 en Planta →</a></p>
+      <div class="section-intro"><div><span class="section-kicker">LISTA DE MATERIALES</span><h2>Piezas históricas C05/C06</h2></div><button id="download-parts" class="outline-button">↓ Exportar lista CSV</button></div>
       <div class="parts-summary"><div><strong>996</strong><span>instancias en el visor</span></div><div><strong>492</strong><span>códigos del visor</span></div><div><strong>17 379 <small>kg</small></strong><span>masa registrada · parcial</span></div><p>Datos del modelo. Masa sin dato: n/d. Clic en una pieza para verla en el modelo.</p></div>
       <div class="content-card"><div class="table-controls"><label class="search"><span>⌕</span><input id="parts-search" placeholder="Buscar pieza, código o material…" aria-label="Buscar pieza, código o material"></label><select id="parts-category" aria-label="Filtrar piezas por conjunto"><option value="">Todos los conjuntos</option></select><label class="compact-check"><input id="group-parts" type="checkbox" checked> Agrupar similares</label><span class="result-count" id="parts-count"></span></div><div class="table-scroll"><table class="parts-table"><thead><tr><th>Código</th><th>Pieza / componente</th><th>Conjunto</th><th class="numeric">Cant.</th><th class="numeric">Masa total · kg</th><th></th></tr></thead><tbody id="parts-body"></tbody></table></div><div id="parts-empty" class="empty" hidden>No hay piezas que coincidan con la búsqueda.</div></div>
     </section>
-  <section id="documentos" class="tab-panel" hidden><div class="section-intro"><div><span class="section-kicker">ACTUALIZACIÓN 28/10/2026</span><h2>Documentos</h2></div></div><div class="commercial-grid">
-<article class="commercial-card"><h3>Conjunto de planta R01</h3><p>Faja horizontal e inclinada S y tolva TT10. Distribución para revisión con posiciones 0°, 35° y 70°.</p><a href="documentos/PLANTA_SELECCION_CARBON_IMPLANTACION_R01.pdf" download>Distribución PDF ↗</a> · <a href="documentos/PLANTA_SELECCION_CARBON_R01.step" download>STEP ↗</a> · <a href="documentos/PLANTA_SELECCION_CARBON_R01.zip" download>Paquete R01 ↗</a></article>
-<article class="commercial-card"><h3>Manual visual de fabricación y armado</h3><p>26 pasos con piezas reales, códigos y cantidades. 57 páginas A4. Conserva el estado técnico del diseño de la tolva.</p><a href="documentos/TT10_MANUAL_VISUAL_FABRICACION_Y_ARMADO.pdf" download>Manual PDF ↗</a></article>
-<article class="commercial-card"><h3>Planos del proyecto</h3><p id="plans-meta">Revisión actual disponible · estado técnico indicado en cada plano</p><a href="documentos/TT10_PLANOS_CONJUNTOS.pdf" download>PDF ↗</a> · <a href="documentos/TT10_PLANOS_EDITABLES.zip" download>Nativos SolidWorks ↗</a> · <a href="documentos/TT10_C05_CONJUNTO.step" download>STEP ↗</a></article>
-<article class="commercial-card"><h3>Lista de materiales</h3><p>BOM CAD: 492 códigos · 996 instancias. Despiece interno: 36 chapas ya incluidas en sus seis cajones.</p><a href="documentos/TT10_BOM_COMPRAS.xlsx" download>Excel ↗</a> · <a href="documentos/TT10_BOM_COMPRAS.pdf" download>PDF ↗</a> · <a href="documentos/TT10_DESPIECE_CAJONES.csv" download>Despiece CSV ↗</a></article>
-<article class="commercial-card"><h3>Informe de cálculo</h3><p>Impacto, carga descentrada, transmisión, frenado y giro · 25/10/2026</p><a href="documentos/TT10_INFORME_CALCULO.pdf" download>Descargar PDF ↗</a></article>
-<article class="commercial-card"><h3>Perfiles de corte</h3><p>DXF en mm · escala 1:1 · respetar el estado de cada pieza en los planos</p><a href="documentos/TT10_DXF_CORTE.zip" download>Descargar ZIP ↗</a></article></div></section></main>
+  <section id="documentos" class="tab-panel" hidden><div class="section-intro"><div><span class="section-kicker">ACTUALIZACIÓN 29/10/2026</span><h2>Documentos</h2></div></div><div class="commercial-grid"><article class="commercial-card"><h3>Actual · Planta R03 y accionamiento 318M</h3><p>Memoria de cálculo y comprobación web con incidencias geométricas identificadas.</p><a href="documentos/MEMORIA_ACCIONAMIENTO_TOLVA_10T_R03.pdf">Memoria R03 PDF ↗</a> · <a href="documentos/VERIFICACION_WEB_R03.html">Verificación ↗</a></article>
+<article class="commercial-card"><h3>Histórico · Conjunto de planta R01</h3><p>Faja horizontal e inclinada S y tolva TT10. Distribución para revisión con posiciones 0°, 35° y 70°.</p><a href="documentos/PLANTA_SELECCION_CARBON_IMPLANTACION_R01.pdf" download>Distribución PDF ↗</a> · <a href="documentos/PLANTA_SELECCION_CARBON_R01.step" download>STEP ↗</a> · <a href="documentos/PLANTA_SELECCION_CARBON_R01.zip" download>Paquete R01 ↗</a></article>
+<article class="commercial-card"><h3>Histórico · Manual visual de fabricación y armado</h3><p>26 pasos con piezas reales, códigos y cantidades. 57 páginas A4. Conserva el estado técnico del diseño de la tolva.</p><a href="documentos/TT10_MANUAL_VISUAL_FABRICACION_Y_ARMADO.pdf" download>Manual PDF ↗</a></article>
+<article class="commercial-card"><h3>Histórico · Planos C05/C06</h3><p id="plans-meta">Planos anteriores al accionamiento 318M · no corresponden a R03</p><a href="documentos/TT10_PLANOS_CONJUNTOS.pdf" download>PDF ↗</a> · <a href="documentos/TT10_PLANOS_EDITABLES.zip" download>Nativos SolidWorks ↗</a> · <a href="documentos/TT10_C05_CONJUNTO.step" download>STEP ↗</a></article>
+<article class="commercial-card"><h3>Histórico · Lista de materiales</h3><p>BOM CAD: 492 códigos · 996 instancias. Despiece interno: 36 chapas ya incluidas en sus seis cajones.</p><a href="documentos/TT10_BOM_COMPRAS.xlsx" download>Excel ↗</a> · <a href="documentos/TT10_BOM_COMPRAS.pdf" download>PDF ↗</a> · <a href="documentos/TT10_DESPIECE_CAJONES.csv" download>Despiece CSV ↗</a></article>
+<article class="commercial-card"><h3>Histórico · Informe de cálculo</h3><p>Impacto, carga descentrada, transmisión, frenado y giro · 25/10/2026</p><a href="documentos/TT10_INFORME_CALCULO.pdf" download>Descargar PDF ↗</a></article>
+<article class="commercial-card"><h3>Histórico · Perfiles de corte</h3><p>DXF en mm · escala 1:1 · respetar el estado de cada pieza en los planos</p><a href="documentos/TT10_DXF_CORTE.zip" download>Descargar ZIP ↗</a></article></div></section></main>
   <footer><span>SESUVECA / PLANTA DE SELECCIÓN</span></footer>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script type="module" src="app-c05.js?v=20261028-planta"></script>
-  <script type="module" src="app-planta.js?v=20261028-R01"></script>
+  <script type="module" src="app-c05.js?v=20261029-R03"></script>
+  <script type="module" src="app-planta.js?v=20261029-R03"></script>
 </body>
 </html>

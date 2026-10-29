@@ -1,24 +1,27 @@
 import * as THREE from 'three';
+import { instanceMatrix, manualPose, cyclePose, cycleDuration } from './plant-motion.js?v=20261029-R03';
 import { OrbitControls } from './assets/vendor/OrbitControls.js';
 import { RoomEnvironment } from './assets/vendor/RoomEnvironment.js';
 import { toCreasedNormals } from './assets/vendor/BufferGeometryUtils.js';
 
-// R01 is a placement of the original equipment. Conveyor tessellations already
-// contain their world transform; only the hopper has an articulated transform.
+// Native R03 tessellation and component transforms, in millimetres.
 const panel = document.getElementById('planta');
 const $ = (selector) => panel?.querySelector(selector);
 const $$ = (selector) => [...(panel?.querySelectorAll(selector) || [])];
 const mm = 0.001;
 const format = (value, digits = 1) => Number(value).toLocaleString('es-ES', { maximumFractionDigits: digits, minimumFractionDigits: digits });
-const state = { angle: 0, playing: false, direction: 1, edges: true, reference: true, flows: false, view: 'iso', ready: false };
-let meta, hopperMeta, scene, renderer, camera, controls, model, tolvaRoot, fixed, moving;
+const state = { angle: 0, playing: false, direction: 1, edges: true, reference: false, flows: false, view: 'iso', ready: false, cycleTime: 0, pose: manualPose(0) };
+let meta, scene, renderer, camera, controls, model, tolvaRoot;
+let incidentKeys = new Set();
+const incidentMaterial = new THREE.MeshStandardMaterial({ color:'#c94734', roughness:.65, side:THREE.DoubleSide });
+let driveEnvelope, chuteEnvelope;
 let referenceGroup, referenceEdges, fixedEdges, movingEdges, staticEdges, flowsGroup;
 let envelope, hopperEnvelope, flowEnvelope, hopperFlowEnvelope, edgeMaterial, environmentTarget, loading = false, lastFrame = 0;
 const meshes = [];
 const edgeCache = new Map();
 const geometryCache = new Map();
 const motionMeshes = [];
-const viewNames = { iso: 'ISOMÉTRICA', selection: 'SELECCIÓN · TOLVA', top: 'PLANTA', profile: 'PERFIL LONGITUDINAL', front: 'FRONTAL' };
+const viewNames = { iso: 'ISOMÉTRICA', selection: 'SELECCIÓN · TOLVA', top: 'PLANTA', profile: 'PERFIL LONGITUDINAL', front: 'FRONTAL', drive: 'ACCIONAMIENTO 318M', chute: 'CANALETA · INCIDENCIAS' };
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const vector = (array) => new THREE.Vector3(...array);
 
@@ -106,72 +109,43 @@ function makeStudio() {
   grid.rotation.x = Math.PI / 2; grid.position.z = -0.035;
   grid.material.transparent = true; grid.material.opacity = 0.23; grid.material.depthWrite = false;
   scene.add(grid);
-  model = new THREE.Group(); model.name = 'Implantación R01 · geometría nativa'; scene.add(model);
+  model = new THREE.Group(); model.name = 'Planta R03 · geometría nativa'; scene.add(model);
   edgeMaterial = new THREE.LineBasicMaterial({ color: '#163749', transparent: true, opacity: 0.32, depthWrite: false, toneMapped: false });
 }
 
-function addConveyors(binary) {
-  referenceGroup = new THREE.Group(); referenceGroup.name = 'Reserva de espacio de operarios'; model.add(referenceGroup);
-  const points = [], referencePoints = [];
-  for (const part of meta.staticParts) {
-    const geometry = geometryFromBuffer(part, binary);
-    const isReference = part.equipment === 'reference';
-    const isBelt = part.material === 'belt';
-    const material = new THREE.MeshStandardMaterial({ name: part.material || part.label,
-      color: part.color || '#237dad', roughness: isBelt ? 0.94 : isReference ? 0.75 : 0.47,
-      metalness: part.material === 'metal' ? 0.78 : isBelt ? 0 : 0.25,
-      side: THREE.DoubleSide, transparent: isReference, opacity: isReference ? 0.55 : 1,
-      depthWrite: !isReference, envMapIntensity: isBelt ? 0.3 : 0.75,
-      polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.name = part.label; mesh.scale.setScalar(mm);
-    mesh.userData = { equipment: part.equipment, part: part.id, reference: isReference };
-    (isReference ? referenceGroup : model).add(mesh); meshes.push(mesh);
-    mesh.updateMatrix();
-    appendEdges(mesh, isReference ? referencePoints : points, part.id);
+function addPlant(binary) {
+  referenceGroup = new THREE.Group(); referenceGroup.name = 'Reserva de enfriador · sin equipo definido'; model.add(referenceGroup);
+  tolvaRoot = new THREE.Group(); model.add(tolvaRoot);
+  const materials = new Map(), fixedPoints = [], reservePoints = [];
+  const parts = new Map(meta.parts.map(p => [p.id,p]));
+  for (const part of meta.parts) geometryCache.set(part.id, geometryFromBuffer(part,binary));
+  for (const instance of meta.instances) {
+    const part = parts.get(instance.part);
+    if (!part) throw new Error(`Geometría ausente: ${instance.part}`);
+    let color = colorFor(part);
+    if (instance.group === 'horizontal' || instance.group === 'inclinada') color = /BANDA|BELT|CINTA/i.test(part.id) ? '#202b30' : '#36758a';
+    if (instance.group === 'plataforma') color = /PISO|REJILLA|PELD/i.test(part.id) ? '#82949e' : '#405b6a';
+    if (instance.group === 'canaleta') color = '#b39745';
+    const materialKey = color + (instance.reserve ? '/reserve' : '');
+    if (!materials.has(materialKey)) materials.set(materialKey,new THREE.MeshStandardMaterial({color,roughness:.6,metalness:.25,side:THREE.DoubleSide,wireframe:instance.reserve,transparent:instance.reserve,opacity:instance.reserve?.45:1}));
+    const mesh = new THREE.Mesh(geometryCache.get(part.id),materials.get(materialKey));
+    mesh.name=instance.key; mesh.matrixAutoUpdate=false;
+    mesh.userData={instance,part:part.id,equipment:instance.group,reference:instance.reserve,normalMaterial:mesh.material};
+    applyPose(mesh);
+    (instance.reserve?referenceGroup:['tolva_movil','tolva_fija'].includes(instance.group)?tolvaRoot:model).add(mesh);
+    meshes.push(mesh);
+    if(instance.motion.kind!=='fixed') {
+      const line=new THREE.LineSegments(edgesFor(mesh.geometry,part.id),edgeMaterial);line.raycast=()=>{};mesh.add(line);motionMeshes.push(mesh);
+    } else appendEdges(mesh,instance.reserve?reservePoints:fixedPoints,part.id);
   }
-  staticEdges = makeEdges(points); staticEdges.name = 'Aristas de fajas fijas'; model.add(staticEdges);
-  referenceEdges = makeEdges(referencePoints); referenceEdges.name = 'Aristas de reserva de operarios'; referenceGroup.add(referenceEdges);
+  staticEdges=makeEdges(fixedPoints); model.add(staticEdges);
+  referenceEdges=makeEdges(reservePoints);referenceGroup.add(referenceEdges);referenceGroup.visible=state.reference;
 }
 
-function addHopper(binary) {
-  tolvaRoot = new THREE.Group(); tolvaRoot.name = 'Tolva · origen normalizado';
-  const normalization = meta.hopper_assets?.normalization_mm || [-7.5, -28.75, -6.5];
-  tolvaRoot.position.fromArray(normalization).multiplyScalar(mm);
-  model.add(tolvaRoot);
-  fixed = new THREE.Group(); fixed.name = 'Tolva · estructura fija';
-  moving = new THREE.Group(); moving.name = 'Tolva · cuba basculante';
-  const pivot = meta.hopper_assets?.pivot_original_mm || hopperMeta.pivot_mm || [7.5, 28.75, 2357.5];
-  moving.position.fromArray(pivot).multiplyScalar(mm);
-  tolvaRoot.add(fixed, moving);
-  const parts = new Map(hopperMeta.parts.map(part => [part.id, part]));
-  const materials = new Map();
-  const fixedPoints = [], movingPoints = [];
-  for (const part of hopperMeta.parts) geometryCache.set(part.id, geometryFromBuffer(part, binary));
-  for (const instance of hopperMeta.instances) {
-    const part = parts.get(instance.part);
-    if (!part) throw new Error(`La instancia ${instance.instance_key || instance.part} no tiene geometría.`);
-    const materialKey = `${colorFor(part)}/${part.material || ''}`;
-    if (!materials.has(materialKey)) materials.set(materialKey, hopperMaterial(part));
-    const mesh = new THREE.Mesh(geometryCache.get(instance.part), materials.get(materialKey));
-    const articulated = instance.group === 'movil';
-    // Each u/v/n basis is applied once; origins are in the original hopper frame.
-    mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(vector(instance.u), vector(instance.v), vector(instance.n)));
-    mesh.scale.setScalar(mm);
-    mesh.position.fromArray(instance.origin).multiplyScalar(mm);
-    if (articulated) mesh.position.sub(moving.position);
-    mesh.name = instance.instance_key || instance.part;
-    mesh.userData = { part: instance.part, equipment: 'hopper', moving: articulated,
-      pin: instance.pin || 0, pawl: Boolean(instance.pawl), base: mesh.position.clone() };
-    (articulated ? moving : fixed).add(mesh); meshes.push(mesh);
-    mesh.updateMatrix();
-    if (mesh.userData.pin || mesh.userData.pawl) {
-      const line = new THREE.LineSegments(edgesFor(mesh.geometry, instance.part), edgeMaterial);
-      line.raycast = () => {}; mesh.add(line); motionMeshes.push(mesh);
-    } else appendEdges(mesh, articulated ? movingPoints : fixedPoints, instance.part);
-  }
-  fixedEdges = makeEdges(fixedPoints); fixedEdges.name = 'Aristas de tolva fija'; fixed.add(fixedEdges);
-  movingEdges = makeEdges(movingPoints); movingEdges.name = 'Aristas de cuba'; moving.add(movingEdges);
+function applyPose(mesh) {
+  const matrix=instanceMatrix(mesh.userData.instance,state.pose);
+  for(let k=0;k<16;k++)if(k%4!==3)matrix[k]*=mm;
+  mesh.matrix.fromArray(matrix);mesh.matrixWorldNeedsUpdate=true;
 }
 
 function edgesFor(geometry, key) {
@@ -201,8 +175,8 @@ function makeEdges(points) {
 
 function addFlow() {
   flowsGroup = new THREE.Group(); flowsGroup.name = 'Flujo ilustrativo';
-  const accepted = meta.flows?.accepted?.points_mm || [[-2555.68, 1900, 5300], [-2555.68, -2650, 5300], [-2555.68, -14000, 8250]];
-  const rejected = meta.flows?.rejected?.points_mm || [[-2250, 0, 5310], [-1200, 0, 3400]];
+  const accepted = meta.flows?.accepted?.points_mm || [[-2555.68, 1900, 2700], [-2555.68, -2650, 2700], [-2555.68, -14000, 6500]];
+  const rejected = meta.flows?.rejected?.points_mm || [[-2150, 0, 2700], [-1200, 0, 2300]];
   const discharge = [[2500, 0, 700], [4200, 0, 700]];
   flowEnvelope = new THREE.Box3().setFromPoints([...accepted, ...rejected, ...discharge].map(point => vector(point).multiplyScalar(mm))).expandByScalar(0.3);
   hopperFlowEnvelope = new THREE.Box3().setFromPoints([...rejected, ...discharge].map(point => vector(point).multiplyScalar(mm))).expandByScalar(0.3);
@@ -226,31 +200,26 @@ function addFlow() {
 }
 
 function updatePose() {
-  if (!moving) return;
-  moving.rotation.y = THREE.MathUtils.degToRad(state.angle);
-  const released = state.angle > 0.1 ? 1 : 0;
-  for (const mesh of motionMeshes) {
-    mesh.position.copy(mesh.userData.base);
-    mesh.position.y += mesh.userData.pin * 0.210 * released;
-    if (mesh.userData.pawl) mesh.position.z -= 0.025 * released;
-  }
-  model.updateMatrixWorld(true);
+  for(const mesh of motionMeshes) applyPose(mesh);
+  model?.updateMatrixWorld(true);
 }
 
-function setAngle(value, manual = true) {
-  const angle = Number(value);
-  if (!Number.isFinite(angle)) return;
-  if (manual) pause();
-  state.angle = THREE.MathUtils.clamp(angle, 0, 70);
-  $('#planta-angle').value = state.angle;
-  $('#planta-angle-value').textContent = format(state.angle, state.angle % 1 > 0.05 ? 1 : 0);
-  $('#planta-angle').setAttribute('aria-valuetext', `${format(state.angle, 1)} grados`);
-  $('#planta-pose').textContent = state.angle < 0.1 ? 'Carga' : state.angle > 69.9 ? 'Descarga' : 'Basculamiento';
-  $$('[data-planta-angle]').forEach(button => {
-    const active = Math.abs(Number(button.dataset.plantaAngle) - state.angle) < 0.1;
-    button.classList.toggle('active', active); button.setAttribute('aria-pressed', active);
-  });
-  updatePose();
+function updateReadout() {
+  state.angle=state.pose.angle;
+  $('#planta-angle').value=state.angle;
+  $('#planta-angle-value').textContent=format(state.angle,state.angle%1>.05?1:0);
+  $('#planta-angle').setAttribute('aria-valuetext',`${format(state.angle,1)} grados`);
+  $('#planta-pose').textContent=state.angle<.1?'Carga':state.angle>69.9?'Descarga':'Basculamiento';
+  $('#planta-phase').textContent=state.pose.phase;
+  $$('[data-planta-angle]').forEach(button=>{const active=Math.abs(Number(button.dataset.plantaAngle)-state.angle)<.1;button.classList.toggle('active',active);button.setAttribute('aria-pressed',active);});
+}
+
+function setAngle(value,manual=true) {
+  if(!Number.isFinite(Number(value)))return;
+  if(manual)pause();
+  state.pose=manualPose(value);
+  if(manual)state.cycleTime=state.pose.angle>0?5+state.pose.angle/7:0;
+  updateReadout();updatePose();
 }
 
 function setEdges(show) {
@@ -259,6 +228,11 @@ function setEdges(show) {
   for (const mesh of motionMeshes) for (const child of mesh.children) child.visible = state.edges;
   $('#planta-edges').classList.toggle('active', state.edges);
   $('#planta-edges').setAttribute('aria-pressed', state.edges);
+}
+
+function setIncidents(show) {
+  for(const mesh of meshes)mesh.material=show&&incidentKeys.has(mesh.name)?incidentMaterial:mesh.userData.normalMaterial;
+  $('#planta-live').textContent=show?'Rojo: piezas de canaleta incluidas en pares de contacto. Consulta la comprobación para distinguir penetraciones confirmadas.':'';
 }
 
 function pause() {
@@ -270,33 +244,28 @@ function pause() {
 }
 
 function play() {
-  if (!state.ready) return;
-  state.direction = state.angle >= 69.9 ? -1 : state.angle <= 0.1 ? 1 : state.direction;
-  state.playing = true;
-  $('#planta-play').disabled = true;
-  $('#planta-pause').disabled = false;
-  $('#planta-run-status').textContent = 'GIRO VISUAL';
-  $('#planta-run-status').classList.add('is-running');
+  if(!state.ready)return;
+  if(state.cycleTime>=cycleDuration)state.cycleTime=0;
+  state.playing=true;
+  $('#planta-play').disabled=true;$('#planta-pause').disabled=false;
+  $('#planta-run-status').textContent='CICLO VISUAL';$('#planta-run-status').classList.add('is-running');
 }
 
 function measureEnvelopes() {
-  const initialAngle = state.angle;
-  envelope = new THREE.Box3(); hopperEnvelope = new THREE.Box3();
-  for (let angle = 0; angle <= 70; angle += 5) {
-    state.angle = angle; updatePose();
-    envelope.union(new THREE.Box3().setFromObject(model));
-    hopperEnvelope.union(new THREE.Box3().setFromObject(tolvaRoot));
+  const initial=state.pose;envelope=new THREE.Box3();hopperEnvelope=new THREE.Box3();driveEnvelope=new THREE.Box3();chuteEnvelope=new THREE.Box3();
+  for(let angle=0;angle<=70;angle+=5){state.pose=manualPose(angle);updatePose();
+    for(const mesh of meshes){if(mesh.userData.reference)continue;const box=mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld);envelope.union(box);
+      if(['tolva_movil','tolva_fija','horizontal','canaleta'].includes(mesh.userData.equipment))hopperEnvelope.union(box);
+      if(mesh.userData.equipment==='accionamiento')driveEnvelope.union(box);
+      if(mesh.userData.equipment==='canaleta')chuteEnvelope.union(box);
+    }
   }
-  // Selection detail includes the picking belt and the operator space beside it.
-  for (const mesh of meshes) if (['horizontal', 'reference'].includes(mesh.userData.equipment)) {
-    hopperEnvelope.union(new THREE.Box3().setFromObject(mesh));
-  }
-  state.angle = initialAngle; updatePose();
+  chuteEnvelope.expandByScalar(.25);driveEnvelope.expandByScalar(.1);state.pose=initial;updatePose();
 }
 
 function activeEnvelope() {
-  const box = (state.view === 'selection' ? hopperEnvelope : envelope).clone();
-  if (state.flows) box.union(state.view === 'selection' ? hopperFlowEnvelope : flowEnvelope);
+  const box=(state.view==='selection'?hopperEnvelope:state.view==='drive'?driveEnvelope:state.view==='chute'?chuteEnvelope:envelope).clone();
+  if(state.flows&&state.view!=='drive'&&state.view!=='chute')box.union(state.view==='selection'?hopperFlowEnvelope:flowEnvelope);
   return box;
 }
 
@@ -333,13 +302,13 @@ function view(name = 'iso') {
   state.view = Object.hasOwn(viewNames, name) ? name : 'iso';
   const box = activeEnvelope();
   const target = box.getCenter(new THREE.Vector3());
-  const directions = { iso: [-1.15, -1.55, 1.05], selection: [-1.15, -1.55, 0.9], top: [0, -0.0001, 1], profile: [1, 0, 0.02], front: [0, -1, 0.02] };
+  const directions = { iso: [-1.15, -1.55, 1.05], selection: [-1.15, -1.55, 0.9], top: [0, -0.0001, 1], profile: [1, 0, 0.02], front: [0, -1, 0.02], drive: [1.4,2.2,1.1], chute: [1.4,-1.2,1] };
   const distance = Math.max(30, box.getSize(new THREE.Vector3()).length() * 2);
   camera.position.copy(target).add(vector(directions[state.view]).normalize().multiplyScalar(distance));
   camera.zoom = 1;
   controls.target.copy(target); controls.update();
   fittedFrustum();
-  $('#planta-view-label').textContent = `PLANTA R01 / ${viewNames[state.view]}`;
+  $('#planta-view-label').textContent = `PLANTA R03 / ${viewNames[state.view]}`;
   $$('[data-planta-view]').forEach(button => {
     const active = button.dataset.plantaView === state.view;
     button.classList.toggle('active', active); button.setAttribute('aria-pressed', active);
@@ -347,55 +316,44 @@ function view(name = 'iso') {
 }
 
 function fillInformation() {
-  const dimensions = meta.dimensions || {};
-  const set = (id, value, suffix = ' mm', digits = 1) => { if (Number.isFinite(value)) $(id).textContent = `${format(value, digits)}${suffix}`; };
-  set('#planta-clearance', dimensions.horizontalVerticalClearanceMm, ' mm', 0);
-  set('#planta-belt-height', dimensions.horizontalBeltCenterHeightMm);
-  set('#planta-platform-height', dimensions.operatorReferenceHeightMm);
-  set('#planta-inclination', dimensions.inclinedAngleDeg, '°');
-  set('#planta-sweep-height', dimensions.hopperSweepMaxZMm);
-  const counts = meta.counts || {};
-  $('#planta-counts').textContent = `${format(counts.hopperInstances || hopperMeta.instances.length, 0)} tolva · ${format(counts.horizontalInstances || 367, 0)} horizontal · ${format(counts.inclinedInstances || 747, 0)} inclinada`;
-  $('#planta-revision').textContent = `IMPLANTACIÓN ${meta.revision || 'R01'} · ${meta.date ? meta.date.split('-').reverse().join('/') : '28/10/2026'}`;
-  $('#planta-status').textContent = meta.status || 'Implantación para revisión';
+  $('#planta-clearance').textContent='127,57 mm';
+  $('#planta-belt-height').textContent='1.950 mm';
+  $('#planta-platform-height').textContent='1.583,1 mm';
+  $('#planta-inclination').textContent='318M · FS 1,75';
+  $('#planta-sweep-height').textContent='0° — 70°';
+  $('#planta-counts').textContent=`${format(meta.instances.length,0)} componentes · ${meta.parts.length} geometrías`;
+  $('#planta-revision').textContent='R03 · 29/10/2026';
+  $('#planta-status').textContent='Canaleta: interferencias detectadas';
 }
 
 function animate(now) {
   requestAnimationFrame(animate);
-  const dt = Math.min(0.06, (now - (lastFrame || now)) / 1000); lastFrame = now;
-  if (panel.hidden || !state.ready) return;
-  if (state.playing) {
-    let angle = state.angle + state.direction * dt * 7;
-    if (angle >= 70) { angle = 70; state.direction = -1; }
-    else if (angle <= 0) { angle = 0; pause(); state.direction = 1; }
-    setAngle(angle, false);
-  }
-  controls.update();
-  renderer.render(scene, camera);
+  const dt=Math.min(.06,(now-(lastFrame||now))/1000);lastFrame=now;
+  if(panel.hidden||!state.ready)return;
+  if(state.playing){state.cycleTime=Math.min(cycleDuration,state.cycleTime+dt);state.pose=cyclePose(state.cycleTime);updateReadout();updatePose();if(state.cycleTime>=cycleDuration)pause();}
+  controls.update();renderer.render(scene,camera);
 }
 
 async function init() {
   if (loading || state.ready || !panel || panel.hidden) return;
   loading = true;
   $('#planta-error').hidden = true; $('#planta-loading').hidden = false;
-  $('#planta-loading-detail').textContent = 'Fajas, tolva y reserva de operarios';
+  $('#planta-loading-detail').textContent = 'Tolva, accionamiento 318M, fajas, plataforma y canaleta';
   try {
-    const [plantMetadata, plantBinary, hopperMetadata, hopperBinary] = await Promise.all([
-      fetchAsset('assets/plant-r01.json?v=20261028-R01'), fetchAsset('assets/plant-r01.bin?v=20261028-R01', true),
-      fetchAsset('assets/machine-c05.json?v=20261025'), fetchAsset('assets/machine-c05.bin?v=20261025', true)
-    ]);
-    meta = plantMetadata; hopperMeta = hopperMetadata;
-    if (!Array.isArray(meta.staticParts) || !meta.staticParts.length || !Array.isArray(hopperMeta.instances)) throw new Error('Los datos de geometría están incompletos.');
+    const [plantMetadata,plantBinary,incidents]=await Promise.all([fetchAsset('assets/plant-r03.json?v=20261029-R03'),fetchAsset('assets/plant-r03.bin?v=20261029-R03',true),fetchAsset('data/incidencias-r03.json?v=20261029-R03')]);
+    meta=plantMetadata;
+    incidentKeys=new Set(incidents.keys);
+    if(meta.instances?.length!==2174||!meta.parts?.length)throw new Error('Exportación R03 incompleta.');
     makeStudio();
     $('#planta-loading-detail').textContent = 'Preparando superficies y aristas';
     // Let the loader paint before preparing the native geometry.
     await new Promise(resolve => requestAnimationFrame(resolve));
-    addConveyors(plantBinary); addHopper(hopperBinary); addFlow();
+    addPlant(plantBinary); addFlow();
     updatePose(); measureEnvelopes(); fillInformation();
     state.ready = true;
     view('iso'); resize(); setEdges(state.edges); setAngle(state.angle, false);
     $('#planta-loading').hidden = true;
-    $('#planta-scene').dataset.rendererVersion = 'PLANTA-R01-20261028';
+    $('#planta-scene').dataset.rendererVersion = 'PLANTA-R03-20261029';
     $('#planta-play').disabled = false;
     $$('[data-planta-requires-model]').forEach(control => control.disabled = false);
     new ResizeObserver(resize).observe($('#planta-viewport'));
@@ -403,7 +361,7 @@ async function init() {
     requestAnimationFrame(animate);
   } catch (error) {
     state.ready = false;
-    console.error('Visor de planta R01:', error);
+    console.error('Visor de planta R03:', error);
     $('#planta-loading').hidden = true;
     $('#planta-error').hidden = false;
     $('#planta-error-message').textContent = error.message || 'No se pudo preparar el modelo 3D.';
@@ -439,6 +397,7 @@ function wireControls() {
   $('#planta-fit').addEventListener('click', () => view(state.view));
   $('#planta-edges').addEventListener('click', () => setEdges(!state.edges));
   $('#planta-reference').addEventListener('change', event => { state.reference = event.target.checked; if (referenceGroup) referenceGroup.visible = state.reference; });
+  $('#planta-incidents').addEventListener('change', event => setIncidents(event.target.checked));
   $('#planta-flow').addEventListener('change', event => {
     state.flows = event.target.checked; if (flowsGroup) flowsGroup.visible = state.flows;
     $('#planta-flow-legend').hidden = !state.flows;
